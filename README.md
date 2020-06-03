@@ -12,7 +12,7 @@ X vs O is Gomoku, also called Five in a Row online game. Processing...
 |--|--|--|--|--|
 | 1 |Dung  |Signup |Firebase, ~src/pages/signup||
 | 2 |Quang  |Login, Logout |Firebase, ~src/pages/login||
-| 3 |Name  |Game Screen |Antd, ~src/pages/play||
+| 3 |Nam  |Game Screen |Antd, ~src/pages/play||
 | 4 |Vinh  |Social Screen |Firebase, ~src/pages/social||
 | 5 |Hinh  |Database |Firebase, firebase-database, firebase-function||
 
