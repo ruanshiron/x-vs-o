@@ -1,16 +1,12 @@
 # X vs O
-
-
 ## Introduction
 X vs O is Gomoku, also called Five in a Row online game. Processing...
-
-
 ## TODO 
-
 **Note**
 
  - Dùng Ant Design nhé :v
  - Firebase Authentication [https://www.youtube.com/watch?v=K_wZCW6wXIo](https://www.youtube.com/watch?v=K_wZCW6wXIo) 
+ - Giao diện Game Screen tham khảo [http://gomoku.parunov.com/](http://gomoku.parunov.com/). [https://github.com/anaparunov/gomoku-react](https://github.com/anaparunov/gomoku-react), [https://github.com/ruanshiron/gomoku-react](https://github.com/ruanshiron/gomoku-react)
 
 |No.|Name  |Task |Description|-|
 |--|--|--|--|--|
