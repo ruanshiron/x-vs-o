@@ -4,7 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 // Ant Design
-import '~antd/dist/antd.css';
+import 'antd/dist/antd.css';
 
 // Firebase
 import firebase from 'firebase';

@@ -3,10 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
+  Link
 } from "react-router-dom";
 import Home from './pages/home';
 import Login from './pages/login';
