@@ -1,10 +1,23 @@
 import React from 'react'
+import { Layout } from 'antd'
+import HomeHeader from './header'
+import Footer from '../../components/Footer'
+import Watching from './watching'
+
+const { Content } = Layout
+const contentStyle = { marginTop: 64, background: '#fff' }
 
 function Home() {
   return (
-    <div>
-      Home Page
-    </div>
+    <Layout>
+      <HomeHeader />
+
+      <Content style={contentStyle}>
+        <Watching />
+      </Content>
+
+      <Footer/>
+    </Layout>
   )
 }
 
