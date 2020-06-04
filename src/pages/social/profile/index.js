@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import { Card, Avatar, Row, Col, Typography, Button, Divider } from 'antd'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Card, Row, Col, Typography, Button, Divider } from 'antd'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import History from './history'
 import Stats from './stats'
 
-const { Meta } = Card
 
 const tabList = [
   {
@@ -17,14 +16,38 @@ const tabList = [
   }
 ]
 
-const contentList = {
-  'stats': <Stats/>,
-  'play-history': <History/>
+const contentList = (key) => (props) =>  {
+  switch (key) {
+    case 'stats':
+      return <Stats {...props}/>
+  
+    default:
+      return <History {...props}/>
+  }
 }
 
 
 function Profile(props) {
+  let location = useLocation()
+  let { username } = useParams()
+
+  useEffect(() => {
+    let p = location.search.match(/\?(\w)(=(\d+))?/)
+    console.log(username);
+    
+    if (p)
+      if (p[1] === 'p') {
+        setKey('play-history')
+        let page = parseInt(p[3])
+        if (!isNaN(page)) {
+          setHistoryDefaultPage (page)
+        }
+      }
+    
+  }, [location, username])
+
   const [key, setKey] = useState('stats')
+  const [historyDefaultPage, setHistoryDefaultPage] = useState(1)
 
   return (
     <div className="site-layout-background" >
@@ -32,7 +55,7 @@ function Profile(props) {
         <Row>
           <Col span={5}>
             <Row gutter={[0, 40]}>
-              <img id='profile-avatar' src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
+              <img id='profile-avatar' src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' alt='avatar'/>
             </Row>
             <Row>
               <Typography.Paragraph strong editable>username</Typography.Paragraph>
@@ -41,7 +64,7 @@ function Profile(props) {
               <Typography.Paragraph strong >example@mail.com</Typography.Paragraph>
             </Row>
             <Row>
-              <Link to="/login" strong>change passsword</Link>
+              <Link to="/login">change passsword</Link>
             </Row>
             <Divider/>
             <Row>
@@ -54,10 +77,10 @@ function Profile(props) {
               tabList={tabList}
               activeTabKey={key}
               onTabChange={key => {
-                setKey(key);
+                setKey(key)
               }}
             >
-              {contentList[key]}
+              {contentList(key)({defaultPage: historyDefaultPage})}
             </Card>
           </Col>
         </Row>

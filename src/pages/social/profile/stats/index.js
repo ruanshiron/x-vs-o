@@ -3,20 +3,29 @@ import { List, Typography } from 'antd';
 
 const data = [
   {
-    title: 'Ant Design Title 1',
+    title: 'Điểm',
+    value: 1201
   },
   {
-    title: 'Ant Design Title 2',
+    title: 'Rank',
+    value: 'Vàng'
   },
   {
-    title: 'Ant Design Title 3',
+    title: 'Số trận đã chơi',
+    value: 102
   },
   {
-    title: 'Ant Design Title 4',
+    title: 'Số trận thắng',
+    value: 54
   },
   {
-    title: 'Ant Design Title 1',
+    title: 'Tỉ lệ thắng',
+    value: Math.floor(54/102*100)
   },
+  {
+    title: 'ELO',
+    value: 291
+  }
 ]
 
 function Stats(props) {
@@ -26,8 +35,8 @@ function Stats(props) {
       dataSource={data}
       renderItem={item => (
         <List.Item>
-          <Typography.Text strong>ELO</Typography.Text>
-          <Typography.Text>0</Typography.Text>
+          <Typography.Text strong>{item.title}</Typography.Text>
+          <Typography.Text>{item.value}</Typography.Text>
         </List.Item>
       )}
     />

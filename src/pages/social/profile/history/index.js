@@ -1,77 +1,60 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { List, Tag, Typography, Button } from 'antd'
+import { useHistory, useLocation } from 'react-router-dom'
 
 const data = [
   {
-    title: 'Ant Design Title 1',
+    win: true,
+    point: 10,
+    opponent: 'vinh1',
+    time: new Date(2018, 11, 24, 10, 33, 30, 0)
   },
   {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
+    win: false,
+    point: -10,
+    opponent: 'hellomudkjan',
+    time: new Date(2018, 1, 24, 10, 33, 30, 0)
+  }
 ]
 
-function History(props) {
+for (let index = 0; index < 3; index++) {
+  data.push(...data)
+}
+
+function HistoryItem({win, point, opponent, time}) {
+  return (
+    <List.Item>
+      <Typography.Text strong><Tag color={win ? '#87d068' : '#f50'}>{win ? '勝ち' : '負け'}</Tag> {point > 0 ? '+' + point : point}</Typography.Text>
+      <Button type="link">{opponent}</Button>
+      <Typography>{time.toLocaleString('ja-JP')}</Typography>
+    </List.Item>
+  )
+}
+
+function History({defaultPage}) {
+  let history = useHistory()
+  let location = useLocation()
+  
   return (
     <List
       itemLayout="horizontal"
       dataSource={data}
       pagination={{
         onChange: page => {
-          console.log(page);
+          console.log(page)
+          history.push(location.pathname + '?p=' + page)
         },
         showQuickJumper: true,
-        // defaultCurrent: 1,
+        defaultCurrent: defaultPage,
         showSizeChanger: true
       }}
       renderItem={item => (
-        <List.Item>
-          <Tag color="#87d068">勝ち</Tag>
-          <Typography.Text strong>+1</Typography.Text>
-          <Button type="link">username</Button>
-          <Typography>2020/01/01  01:10</Typography>
-        </List.Item>
+        <HistoryItem
+          win={item.win}
+          point={item.point}
+          opponent={item.opponent}
+          time={item.time}
+        />
       )}
     />
 

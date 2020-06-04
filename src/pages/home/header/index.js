@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Input, Col, Row, Button, Typography, Space } from 'antd'
+import { Layout, Col, Row, Button, Typography, Space } from 'antd'
 import { Link } from 'react-router-dom'
 import { OrderedListOutlined } from '@ant-design/icons'
 import logo from '../../../logo.svg'
@@ -16,24 +16,30 @@ const headerStyle = {
   borderColor: '#F0F0F0'
 }
 
-function SocialHeader(props) {
+function HomeHeader(props) {
   return (
     <Header style={headerStyle}>
       <Row>
         <Col xs={2} sm={4} md={6} lg={6} xl={6}>
           <Row>
-            <Col offset={1}>
-              <a id='logo' href='/'>
-                <img alt='logo' src={logo} />
-                  X vs O
-                </a>
+            <Col offset={1} flex='100%'>
+              <Link to='/play'>
+                <Button type='primary' size='large' primary>
+                   PLAY
+                </Button>
+              </Link>
             </Col>
           </Row>
         </Col>
         <Col xs={20} sm={16} md={12} lg={12} xl={12}>
           <Row>
             <Col offset={1} flex="auto">
-              <Input placeholder='Search User'></Input>
+              <Row justify='center'>
+                <a id='logo' href='/'>
+                  <img alt='logo' src={logo} />
+                X vs O
+              </a>
+              </Row>
             </Col>
           </Row>
         </Col>
@@ -63,4 +69,4 @@ function SocialHeader(props) {
   )
 }
 
-export default SocialHeader
+export default HomeHeader

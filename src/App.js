@@ -2,8 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Home from './pages/home';
 import Login from './pages/login';
@@ -16,7 +15,7 @@ function App() {
   return (
     <Router>
       <div>
-
+{/* 
         <ul>
           <li>
             <Link exact to="/">Top page</Link>
@@ -38,7 +37,7 @@ function App() {
           </li>
         </ul>
         <p>Khu vực sẽ xóa</p>
-        <hr/>
+        <hr/> */}
 
         <Switch>
           <Route exact path="/">
