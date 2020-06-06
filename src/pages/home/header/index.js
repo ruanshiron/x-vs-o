@@ -1,8 +1,8 @@
 import React from 'react'
-import { Layout, Col, Row, Button, Typography, Space } from 'antd'
-import { Link } from 'react-router-dom'
+import { Layout, Col, Row, Typography, Space, Tooltip } from 'antd'
 import { OrderedListOutlined } from '@ant-design/icons'
 import logo from '../../../logo.svg'
+import LinkButton from '../../../components/LinkButton'
 
 const { Header } = Layout
 
@@ -17,21 +17,21 @@ const headerStyle = {
 }
 
 function HomeHeader(props) {
+  let auth = false
+
   return (
     <Header style={headerStyle}>
       <Row>
-        <Col xs={2} sm={4} md={6} lg={6} xl={6}>
+        <Col xs={12} sm={8} md={6} lg={6} xl={6}>
           <Row>
             <Col offset={1} flex='100%'>
-              <Link to='/play'>
-                <Button type='primary' size='large' primary>
-                   PLAY
-                </Button>
-              </Link>
+              <LinkButton type='primary' size='large' to='play'>
+                NEW GAME
+              </LinkButton>
             </Col>
           </Row>
         </Col>
-        <Col xs={20} sm={16} md={12} lg={12} xl={12}>
+        <Col xs={0} sm={8} md={12} lg={12} xl={12}>
           <Row>
             <Col offset={1} flex="auto">
               <Row justify='center'>
@@ -43,23 +43,32 @@ function HomeHeader(props) {
             </Col>
           </Row>
         </Col>
-        <Col xs={2} sm={4} md={6} lg={6} xl={6}>
+        <Col xs={12} sm={8} md={6} lg={6} xl={6}>
           <Row justify="end">
             <Col pull={1}>
               <Space>
-                <Link to='/social'>
-                  <Button
+                <Tooltip placement="bottom" title="ランキング">
+                  <LinkButton
                     type='dashed'
                     size='large'
                     icon={<OrderedListOutlined />}
+                    to='/social'
                   />
-                </Link>
-                <Link to='/social/username'>
-                  <Button type="text" shape="round" size='large'>
-                    <Typography.Text strong>username</Typography.Text>
-                  </Button>
-                </Link>
-
+                </Tooltip>
+                {
+                  auth ?
+                    <Tooltip placement="bottom" title="プロフィール">
+                      <LinkButton to='/social/username' type="text" shape="round" size='large'>
+                        <Typography.Text strong>username</Typography.Text>
+                      </LinkButton>
+                    </Tooltip>
+                    :
+                    <Tooltip placement="bottom" title="ログイン">
+                      <LinkButton to='/social/username' type="default" size='large'>
+                        <Typography.Text strong>LOGIN</Typography.Text>
+                      </LinkButton>
+                    </Tooltip>
+                }
               </Space>
             </Col>
           </Row>

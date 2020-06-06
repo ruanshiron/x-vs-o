@@ -1,8 +1,8 @@
 import React from 'react'
-import { Layout, Input, Col, Row, Button, Typography, Space } from 'antd'
-import { Link } from 'react-router-dom'
+import { Layout, Input, Col, Row, Typography, Space } from 'antd'
 import { OrderedListOutlined } from '@ant-design/icons'
 import logo from '../../../logo.svg'
+import LinkButton from '../../../components/LinkButton'
 
 const { Header } = Layout
 
@@ -41,19 +41,15 @@ function SocialHeader(props) {
           <Row justify="end">
             <Col pull={1}>
               <Space>
-                <Link to='/social'>
-                  <Button
-                    type='dashed'
-                    size='large'
-                    icon={<OrderedListOutlined />}
-                  />
-                </Link>
-                <Link to='/social/username'>
-                  <Button type="text" shape="round" size='large'>
-                    <Typography.Text strong>username</Typography.Text>
-                  </Button>
-                </Link>
-
+                <LinkButton
+                  to='/social'
+                  type='dashed'
+                  size='large'
+                  icon={<OrderedListOutlined />}
+                />
+                <LinkButton to='/social/username' type="text" shape="round" size='large'>
+                  <Typography.Text strong>username</Typography.Text>
+                </LinkButton>
               </Space>
             </Col>
           </Row>
