@@ -57,7 +57,7 @@ function App() {
           <Route path="/social">
             <Social/>
           </Route>
-          <Route path="/dashboard">
+          <Route exact path="/dashboard">
             <Dashboard/>
           </Route>
         </Switch>

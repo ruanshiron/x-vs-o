@@ -23,7 +23,7 @@ function Social() {
           <Route path="/social/:username">
             <Profile />
           </Route>
-          <Route path="/social">
+          <Route exact path="/social">
             <Rankings />
           </Route>
         </Switch>

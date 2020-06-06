@@ -3,6 +3,7 @@ import { Layout, Input, Col, Row, Typography, Space, Tooltip } from 'antd'
 import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons'
 import logo from '../logo.svg'
 import LinkButton from './LinkButton'
+import { useRouteMatch } from 'react-router-dom'
 
 const headerStyle = {
   position: 'fixed',
@@ -16,6 +17,13 @@ const headerStyle = {
 
 function Header({ search }) {
   let auth, admin = true
+
+  let matchDashboard = useRouteMatch('/dashboard')
+  let matchSocial = useRouteMatch({
+    path: '/social',
+    exact: true
+  })
+
   return (
     <Layout.Header style={headerStyle}>
       <Row>
@@ -74,7 +82,7 @@ function Header({ search }) {
                   admin &&
                   <Tooltip placement="bottom" title="ダッシュボード">
                     <LinkButton
-                      type='dashed'
+                      type={matchDashboard?'primary':'dashed'}
                       size='large'
                       icon={<SettingOutlined />}
                       to='/dashboard'
@@ -83,7 +91,7 @@ function Header({ search }) {
                 }
                 <Tooltip placement="bottom" title="ランキング">
                   <LinkButton
-                    type='dashed'
+                    type={matchSocial?'primary':'dashed'}
                     size='large'
                     icon={<OrderedListOutlined />}
                     to='/social'
