@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Tag, Typography, Button } from 'antd'
+import { List, Tag, Typography, Button, Row, Col } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
 
 const data = [
@@ -21,20 +21,30 @@ for (let index = 0; index < 3; index++) {
   data.push(...data)
 }
 
-function HistoryItem({win, point, opponent, time}) {
+function HistoryItem({ win, point, opponent, time }) {
   return (
     <List.Item>
-      <Typography.Text strong><Tag color={win ? '#87d068' : '#f50'}>{win ? '勝ち' : '負け'}</Tag> {point > 0 ? '+' + point : point}</Typography.Text>
-      <Button type="link">{opponent}</Button>
-      <Typography>{time.toLocaleString('ja-JP')}</Typography>
+      <Row style={{ width: '100%' }}>
+        <Col span={8}>
+          <Typography.Text strong><Tag color={win ? '#87d068' : '#f50'}>{win ? '勝ち' : '負け'}</Tag> {point > 0 ? '+' + point : point}</Typography.Text>
+        </Col>
+        <Col span={8}>
+          <Button type="link">{opponent}</Button>
+        </Col>
+        <Col span={8}>
+          <Row justify='end' align='bottom'>
+            <Typography>{time.toLocaleString('ja-JP')}</Typography>
+          </Row>
+        </Col>
+      </Row>
     </List.Item>
   )
 }
 
-function History({defaultPage}) {
+function History({ defaultPage }) {
   let history = useHistory()
   let location = useLocation()
-  
+
   return (
     <List
       itemLayout="horizontal"
