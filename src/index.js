@@ -10,7 +10,7 @@ import 'antd/dist/antd.css';
 import firebase from 'firebase';
 import firebaseConfig from './firebaseConfig';
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 // Firebase
 
 ReactDOM.render(

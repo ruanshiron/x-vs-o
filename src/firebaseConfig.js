@@ -1,3 +1,6 @@
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwszKnu_Fpju1PSW1fWpx-yqo6ZJrqKqs",
@@ -10,4 +13,39 @@ const firebaseConfig = {
   measurementId: "G-D01685HRGR"
 };
 
-export default firebaseConfig
+const provider = new firebase.auth.GoogleAuthProvider();
+
+class Firebase {
+	constructor() {
+		firebase.initializeApp(firebaseConfig)
+		this.auth = firebase.auth()
+		this.db = firebase.firestore()
+	}
+
+	login(email, password) {
+		return this.auth.signInWithEmailAndPassword(email, password)
+	}
+
+	logout() {
+		return this.auth.signOut()
+	}
+
+	async register(name, email, password) {
+		await this.auth.createUserWithEmailAndPassword(email, password)
+		return this.auth.currentUser.updateProfile({
+			displayName: name
+		})
+	}
+
+	getCurrentUsername() {
+		return this.auth.currentUser && this.auth.currentUser.displayName
+	}
+
+	getCurrentUserMail() {
+		return this.auth.currentUser && this.auth.currentUser.email
+	}
+
+	signInWithGoogle = () => this.auth.signInWithPopup(provider);
+}
+
+export default new Firebase()
