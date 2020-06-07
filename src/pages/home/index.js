@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout } from 'antd'
-import HomeHeader from './header'
+import HomeHeader from '../../components/Header'
 import Footer from '../../components/Footer'
 import Watching from './watching'
 

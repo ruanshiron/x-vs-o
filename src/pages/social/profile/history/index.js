@@ -1,6 +1,7 @@
 import React from 'react'
-import { List, Tag, Typography, Button } from 'antd'
+import { List, Tag, Typography, Button, Row, Col, Table } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
+import LinkButton from '../../../../components/LinkButton'
 
 const data = [
   {
@@ -21,24 +22,42 @@ for (let index = 0; index < 3; index++) {
   data.push(...data)
 }
 
-function HistoryItem({win, point, opponent, time}) {
-  return (
-    <List.Item>
-      <Typography.Text strong><Tag color={win ? '#87d068' : '#f50'}>{win ? '勝ち' : '負け'}</Tag> {point > 0 ? '+' + point : point}</Typography.Text>
-      <Button type="link">{opponent}</Button>
-      <Typography>{time.toLocaleString('ja-JP')}</Typography>
-    </List.Item>
-  )
-}
 
-function History({defaultPage}) {
+const columns = [
+  {
+    title: 'Win',
+    dataIndex: 'win',
+    key: 'win',
+    render: (win) => <Tag color={win ? '#87d068' : '#f50'}>{win ? '勝ち' : '負け'}</Tag>,
+  },
+  {
+    title: 'Point',
+    dataIndex: 'point',
+    key: 'point',
+    render: (point) => (point > 0 ? '+' + point : point)
+  },
+  {
+    title: 'Opponent',
+    dataIndex: 'opponent',
+    key: 'opponent',
+    render: (opponent) => <LinkButton type='link' to={`/social/${opponent}`} >{opponent}</LinkButton>
+  },
+  {
+    title: 'Time',
+    key: 'time',
+    dataIndex: 'time',
+    align: 'right',
+    render: (time) => (time.toLocaleString('ja-JP')),
+  }
+];
+
+function History({ defaultPage }) {
   let history = useHistory()
   let location = useLocation()
-  
+
   return (
-    <List
-      itemLayout="horizontal"
-      dataSource={data}
+    <Table
+      columns={columns}
       pagination={{
         onChange: page => {
           console.log(page)
@@ -46,19 +65,14 @@ function History({defaultPage}) {
         },
         showQuickJumper: true,
         defaultCurrent: defaultPage,
-        showSizeChanger: true
+        showSizeChanger: true,
+        responsive: true
       }}
-      renderItem={item => (
-        <HistoryItem
-          win={item.win}
-          point={item.point}
-          opponent={item.opponent}
-          time={item.time}
-        />
-      )}
+      dataSource={data}
+      showHeader={false}
     />
-
   )
+
 }
 
 export default History

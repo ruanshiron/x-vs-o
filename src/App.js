@@ -11,6 +11,8 @@ import Signup from './pages/signup';
 import Social from './pages/social';
 import Dashboard from './pages/dashboard';
 
+import './style.css'
+
 function App() {
   return (
     <Router>
@@ -55,7 +57,7 @@ function App() {
           <Route path="/social">
             <Social/>
           </Route>
-          <Route path="/dashboard">
+          <Route exact path="/dashboard">
             <Dashboard/>
           </Route>
         </Switch>

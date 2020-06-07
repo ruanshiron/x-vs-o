@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Layout } from 'antd'
-import './style.css'
-import SocialHeader from './header'
+import SocialHeader from '../../components/Header'
 import Profile from './profile'
 import { Switch, Route, useLocation } from 'react-router-dom'
 import Rankings from './rankings'
@@ -18,13 +17,13 @@ function Social() {
   }, [pathname])
   return (
     <Layout>
-      <SocialHeader />
+      <SocialHeader search/>
       <Content style={contentStyle}>
         <Switch>
           <Route path="/social/:username">
             <Profile />
           </Route>
-          <Route path="/social">
+          <Route exact path="/social">
             <Rankings />
           </Route>
         </Switch>
