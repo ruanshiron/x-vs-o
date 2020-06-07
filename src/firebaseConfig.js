@@ -13,6 +13,8 @@ const firebaseConfig = {
   measurementId: "G-D01685HRGR"
 };
 
+const provider = new firebase.auth.GoogleAuthProvider();
+
 class Firebase {
 	constructor() {
 		firebase.initializeApp(firebaseConfig)
@@ -38,6 +40,12 @@ class Firebase {
 	getCurrentUsername() {
 		return this.auth.currentUser && this.auth.currentUser.displayName
 	}
+
+	getCurrentUserMail() {
+		return this.auth.currentUser && this.auth.currentUser.email
+	}
+
+	signInWithGoogle = () => this.auth.signInWithPopup(provider);
 }
 
 export default new Firebase()
