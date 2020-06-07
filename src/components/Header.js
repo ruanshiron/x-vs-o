@@ -4,6 +4,7 @@ import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons'
 import logo from '../logo.svg'
 import LinkButton from './LinkButton'
 import { useRouteMatch } from 'react-router-dom'
+import firebaseConfig from '../firebaseConfig'
 
 const headerStyle = {
   position: 'fixed',
@@ -16,7 +17,7 @@ const headerStyle = {
 }
 
 function Header({ search }) {
-  let auth, admin = true
+  let admin = true
 
   let matchDashboard = useRouteMatch('/dashboard')
   let matchSocial = useRouteMatch({
@@ -99,15 +100,15 @@ function Header({ search }) {
                 </Tooltip>
 
                 {
-                  auth ?
+                  firebaseConfig.auth.currentUser ?
                     <Tooltip placement="bottom" title="プロフィール">
-                      <LinkButton to='/social/username' type="text" shape="round" size='large'>
+                      <LinkButton to={`/social/${firebaseConfig.auth.currentUser.uid}`} type="text" shape="round" size='large'>
                         <Typography.Text strong>username</Typography.Text>
                       </LinkButton>
                     </Tooltip>
                     :
                     <Tooltip placement="bottom" title="ログイン">
-                      <LinkButton to='/social/username' type="default" size='large'>
+                      <LinkButton to='/login' type="default" size='large'>
                         <Typography.Text strong>LOGIN</Typography.Text>
                       </LinkButton>
                     </Tooltip>

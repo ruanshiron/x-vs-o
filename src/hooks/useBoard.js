@@ -1,5 +1,4 @@
 import { useState, useEffect} from 'react'; 
-import { functions } from 'firebase';
 
 // TODO: Firebase here 
 
@@ -22,9 +21,9 @@ function useBoard() {
   const [mark, setMark] = useState(false)
 
   useEffect(() => {
-    setHistory([...history, board])
+    setHistory(h => [...h, board])
     console.log(board);
-    setMark(!mark)
+    setMark(m => !m)
   }, [board])
 
   function move(x, y) {

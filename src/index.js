@@ -6,10 +6,6 @@ import * as serviceWorker from './serviceWorker';
 // Ant Design
 import 'antd/dist/antd.css';
 
-// Firebase
-import firebase from 'firebase';
-import firebaseConfig from './firebaseConfig';
-
 // firebase.initializeApp(firebaseConfig);
 // Firebase
 
