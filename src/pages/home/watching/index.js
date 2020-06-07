@@ -1,12 +1,21 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Input, Divider } from 'antd'
+import Board from '../../../components/Board'
 
 
 function Watching() {
   return (
     <div className="site-layout-background" >
-      <Card style={{ width: '100%', marginTop: 16, height: 600 }} >
-        <img src='https://danhcotuong.org/wp-content/uploads/2017/10/thu-thuat-choi-co-caro-doc-nhat-2.jpg' alt='xem'/>
+      <Card style={{ width: 512, margin: 'auto' }} >
+        <Input.Search
+          placeholder="input search text"
+          onSearch={value => console.log(value)}
+          style={{ width: 200 }}
+          style={{margin: 'auto'}}
+          enterButton
+        />
+        <Divider dashed/>
+        <Board />
       </Card>
     </div>
   )
