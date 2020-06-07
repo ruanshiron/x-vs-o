@@ -1,7 +1,5 @@
 import React from 'react'
-import { Card, List, Typography, Col, Row, Table, Tag } from 'antd'
-import LinkButton from '../../../components/LinkButton'
-import { Link } from 'react-router-dom';
+import { Card, Typography, Table } from 'antd'
 
 const data = [
 
