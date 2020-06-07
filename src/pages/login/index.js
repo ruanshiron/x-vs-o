@@ -69,7 +69,15 @@ function SignIn(props) {
 						color="primary"
 						onClick={login}
 						className={classes.submit}>
-						Sign in
+						Sign In
+          			</Button>
+          			<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						onClick={signInWithGoogle}
+						className={classes.submit}>
+						Sign In with Google
           			</Button>
 					<Button
 						type="submit"
@@ -89,6 +97,15 @@ function SignIn(props) {
 	async function login() {
 		try {
 			await firebaseConfig.login(email, password)
+			props.history.replace('/dashboard')
+		} catch(error) {
+			alert(error.message)
+		}
+	}
+
+	async function signInWithGoogle() {
+		try {
+			await firebaseConfig.signInWithGoogle()
 			props.history.replace('/dashboard')
 		} catch(error) {
 			alert(error.message)

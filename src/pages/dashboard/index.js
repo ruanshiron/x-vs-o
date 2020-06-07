@@ -50,7 +50,10 @@ function Dashboard(props) {
 					<VerifiedUserOutlined />
 				</Avatar>
 				<Typography component="h1" variant="h5">
-					Hello { firebaseConfig.getCurrentUsername() }
+					{ firebaseConfig.getCurrentUsername() }
+				</Typography>
+				<Typography component="h2" variant="h6">
+					{ firebaseConfig.getCurrentUserMail() }
 				</Typography>
 				<Button
 					type="submit"
@@ -67,7 +70,7 @@ function Dashboard(props) {
 
 	async function logout() {
 		await firebaseConfig.logout()
-		props.history.push('/')
+		props.history.push('/login')
 	}
 }
 
