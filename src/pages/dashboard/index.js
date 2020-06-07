@@ -1,77 +1,92 @@
-import React, { useEffect, useState } from 'react'
-import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
-import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
-import withStyles from '@material-ui/core/styles/withStyles'
-import firebaseConfig from '../../firebaseConfig'
-import { withRouter } from 'react-router-dom'
 
-const styles = theme => ({
-	main: {
-		width: 'auto',
-		display: 'block', // Fix IE 11 issue.
-		marginLeft: theme.spacing.unit * 3,
-		marginRight: theme.spacing.unit * 3,
-		[theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-			width: 400,
-			marginLeft: 'auto',
-			marginRight: 'auto',
-		},
-	},
-	paper: {
-		marginTop: theme.spacing.unit * 8,
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-	},
-	avatar: {
-		margin: theme.spacing.unit,
-		backgroundColor: theme.palette.secondary.main,
-	},
-	submit: {
-		marginTop: theme.spacing.unit * 3,
-	},
-})
+import React from 'react'
+import { Layout, Card, Tag, Table } from 'antd'
+import DashboardHeader from '../../components/Header'
+import Footer from '../../components/Footer'
 
-function Dashboard(props) {
-	const { classes } = props
+const contentStyle = { marginTop: 64, background: '#fff' }
 
-	if(!firebaseConfig.getCurrentUsername()) {
-		// not logged in
-		alert('Please login first!')
-		props.history.replace('/login')
-		return null
-	}
+const data = [
+  
+]
 
-	return (
-		<main className={classes.main}>
-			<Paper className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<VerifiedUserOutlined />
-				</Avatar>
-				<Typography component="h1" variant="h5">
-					{ firebaseConfig.getCurrentUsername() }
-				</Typography>
-				<Typography component="h2" variant="h6">
-					{ firebaseConfig.getCurrentUserMail() }
-				</Typography>
-				<Button
-					type="submit"
-					fullWidth
-					variant="contained"
-					color="secondary"
-					onClick={logout}
-					className={classes.submit}>
-					Log Out
-          		</Button>
-			</Paper>
-		</main>
-	)
-
-	async function logout() {
-		await firebaseConfig.logout()
-		props.history.push('/login')
-	}
+for (let index = 0; index < 200; index++) {
+  data.push({
+    name: `example${index}`,
+    top: 42,
+    email: `example${index}@example.com`,
+    wins: 12,
+    losses: 123,
+    point: 120
+  })
 }
 
-export default withRouter(withStyles(styles)(Dashboard))
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: 'Top',
+    dataIndex: 'top',
+    key: 'top',
+    render: (top) => (
+      <Tag>
+        {top}
+      </Tag>
+    )
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'Wins',
+    key: 'wins',
+    dataIndex: 'wins'
+  },
+  {
+    title: 'Losses',
+    key: 'losses',
+    dataIndex: 'losses'
+  },
+  {
+    title: 'Point',
+    key: 'point',
+    dataIndex: 'point'
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (text, record) => (
+      <span>
+        <a>Block</a>
+      </span>
+    ),
+  },
+];
+
+function Dashboard() {
+  return (
+    <Layout>
+      <DashboardHeader search />
+      <Layout.Content style={contentStyle}>
+        <div className="site-layout-background" >
+          <Card style={{ width: '100%', marginTop: 16 }} >
+            <Table
+              columns={columns}
+              pagination={{ position: ['topLeft', 'bottomRight'] }}
+              dataSource={data}
+            />
+          </Card>
+        </div>
+      </Layout.Content>
+      <Footer/>
+    </Layout>
+  )
+}
+
+export default Dashboard
