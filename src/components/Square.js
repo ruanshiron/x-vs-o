@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Square({onClick, disabled, mark}) {
+function Square({onClick, disabled, mark,  ...rest}) {
   return (
-    <button className="btn btn-board" onClick={onClick} disabled={disabled}>
+    <button {...rest} className="btn btn-board" onClick={onClick} disabled={disabled}>
       <span className={mark === false? "x" : mark === true? "o" : ""}></span>
     </button>
   )
