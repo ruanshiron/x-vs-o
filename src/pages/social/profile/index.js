@@ -16,13 +16,13 @@ const tabList = [
   }
 ]
 
-const contentList = (key) => (props) =>  {
+const contentList = (key) => (props) => {
   switch (key) {
     case 'stats':
-      return <Stats {...props}/>
-  
+      return <Stats {...props} />
+
     default:
-      return <History {...props}/>
+      return <History {...props} />
   }
 }
 
@@ -34,16 +34,16 @@ function Profile(props) {
   useEffect(() => {
     let p = location.search.match(/\?(\w)(=(\d+))?/)
     console.log(username);
-    
+
     if (p)
       if (p[1] === 'p') {
         setKey('play-history')
         let page = parseInt(p[3])
         if (!isNaN(page)) {
-          setHistoryDefaultPage (page)
+          setHistoryDefaultPage(page)
         }
       }
-    
+
   }, [location, username])
 
   const [key, setKey] = useState('stats')
@@ -55,7 +55,7 @@ function Profile(props) {
         <Row>
           <Col span={5}>
             <Row gutter={[0, 40]}>
-              <img id='profile-avatar' src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' alt='avatar'/>
+              <img id='profile-avatar' src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' alt='avatar' />
             </Row>
             <Row>
               <Typography.Paragraph strong editable>username</Typography.Paragraph>
@@ -66,9 +66,9 @@ function Profile(props) {
             <Row>
               <Link to="/login">change passsword</Link>
             </Row>
-            <Divider/>
+            <Divider />
             <Row>
-              <Button type='dashed' danger style={{width: '100%'}}>Logout</Button>
+              <Button type='dashed' danger style={{ width: '100%' }}>Logout</Button>
             </Row>
           </Col>
           <Col span={18} offset={1}>
@@ -80,7 +80,7 @@ function Profile(props) {
                 setKey(key)
               }}
             >
-              {contentList(key)({defaultPage: historyDefaultPage})}
+              {contentList(key)({ defaultPage: historyDefaultPage })}
             </Card>
           </Col>
         </Row>

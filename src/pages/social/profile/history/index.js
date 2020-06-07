@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Tag, Typography, Button, Row, Col, Table } from 'antd'
+import {  Tag, Table } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
 import LinkButton from '../../../../components/LinkButton'
 
