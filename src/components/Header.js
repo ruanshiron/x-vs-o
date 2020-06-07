@@ -103,7 +103,7 @@ function Header({ search }) {
                   firebaseConfig.auth.currentUser ?
                     <Tooltip placement="bottom" title="プロフィール">
                       <LinkButton to={`/social/${firebaseConfig.auth.currentUser.uid}`} type="text" shape="round" size='large'>
-                        <Typography.Text strong>username</Typography.Text>
+                        <Typography.Text strong>{firebaseConfig.auth.currentUser.displayName}</Typography.Text>
                       </LinkButton>
                     </Tooltip>
                     :
