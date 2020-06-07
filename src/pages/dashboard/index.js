@@ -1,6 +1,6 @@
-
 import React from 'react'
-import { Layout, Card, Tag, Table } from 'antd'
+import { Layout, Card, Tag, Table, Button } from 'antd'
+import { Link } from 'react-router-dom'
 import DashboardHeader from '../../components/Header'
 import Footer from '../../components/Footer'
 
@@ -26,7 +26,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <Link>{text}</Link>,
   },
   {
     title: 'Top',
@@ -63,7 +63,7 @@ const columns = [
     key: 'action',
     render: (text, record) => (
       <span>
-        <a>Block</a>
+        <Button type='link'>Block</Button>
       </span>
     ),
   },
