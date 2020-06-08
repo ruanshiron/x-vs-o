@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import firebaseConfig from '../../firebaseConfig'
 import { Form, Button, Input, Card } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { UserOutlined, LockOutlined, GoogleCircleFilled } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import logo from '../../logo.svg'
 
@@ -116,15 +116,24 @@ import logo from '../../logo.svg'
 function Login(props) {
 	let history = useHistory()
 
-	const onFinish = values => {
-		console.log('Received values of form: ', values) 
-		firebaseConfig
-			.login(values.email, values.password)
-			.catch(error => {
-				console.error(error)
-			})
+	const onFinish = async values => {
+		console.log('Received values of form: ', values)
+		try {
+			await firebaseConfig
+				.login(values.email, values.password)
+			history.replace('/')
+		} catch (error) {
+			alert(error.message)
+		}
+	}
 
-		history.replace('/')
+	const signInWithGoogle = async () => {
+		try {
+			await firebaseConfig.signInWithGoogle()
+			props.history.replace('/dashboard')
+		} catch (error) {
+			alert(error.message)
+		}
 	}
 
 	return (
@@ -168,9 +177,16 @@ function Login(props) {
 
 				<Form.Item>
 					<Button type="primary" htmlType="submit" className="login-form-button" block>
-						Log in
-        </Button>
-        Or <Link to='/signup'>register now!</Link>
+						Login
+        	</Button>
+
+				</Form.Item>
+
+				<Form.Item>
+					<Button type="primary" className="login-form-button" block onClick={signInWithGoogle}>
+						Login with<GoogleCircleFilled />
+					</Button> <br />
+					Or <Link to='/signup'>register now!</Link>
 				</Form.Item>
 			</Form>
 		</Card>
