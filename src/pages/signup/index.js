@@ -1,6 +1,6 @@
 import React from 'react'
 import firebaseConfig from '../../firebaseConfig'
-import { Form, Input, Card, Button, Tooltip, Typography } from 'antd'
+import { Form, Input, Card, Button, Tooltip, Typography, message } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 
@@ -34,14 +34,17 @@ function Signup(props) {
   const [form] = Form.useForm()
   let history = useHistory()
 
-  const onFinish = values => {
+  const onFinish = async values => {
     let {name, email, password} = values
     console.log('Received values of form: ', values)
-    firebaseConfig
-      .register(name, email, password)
-      .then(() => {
-        history.replace('/')
-      })
+    try {
+      await firebaseConfig
+        .register(name, email, password)
+      history.replace('/')    
+    } catch(error) {
+      message.error(error.message)
+    }
+    
   }
 
   return (
