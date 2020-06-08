@@ -25,28 +25,28 @@ const columns = [
     title: 'username',
     dataIndex: 'username',
     key: 'username',
-    render: (username, record) => <Typography.Title level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{username}</Typography.Title>
+    render: (username, record) => <Typography.Title  level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{username}</Typography.Title>
   },
   {
     title: 'losses',
     dataIndex: 'losses',
     key: 'losses',
     align: 'right',
-    render: (losses, record) => <Typography.Title level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{losses}負け</Typography.Title>
+    render: (losses, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{losses}負け</Typography.Title>
   },
   {
     title: 'wins',
     dataIndex: 'wins',
     key: 'wins',
     align: 'right',
-    render: (wins, record) => <Typography.Title level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{wins}勝ち</Typography.Title>
+    render: (wins, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{wins}勝ち</Typography.Title>
   },
   {
     title: 'point',
     key: 'point',
     dataIndex: 'point',
     align: 'right',
-    render: (point, record) => <Typography.Title level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{point}ポイント</Typography.Title>
+    render: (point, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{point}ポイント</Typography.Title>
   }
 ];
 
