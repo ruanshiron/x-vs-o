@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Layout, Card, Divider, Typography, Tooltip, Spin, Switch } from 'antd'
+import { Layout, Card, Divider, Typography, Tooltip, Spin, Switch, Button, Modal } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import Footer from '../../components/Footer'
 import Board from '../../components/Board'
@@ -42,7 +42,7 @@ function Play() {
         <div className="site-layout-background" >
           {
             matching ?
-              <Spin style={{ marginTop: 64 }} size='large' indicator={spinIcon} />
+              <Spin style={{ marginTop: '30vh' }} size='large' indicator={spinIcon} />
               :
               <Card style={{ maxWidth: 512, margin: 'auto' }} >
                 <div style={{ justifyContent: 'space-between', display: 'flex' }}>
@@ -58,6 +58,13 @@ function Play() {
         </div>
       </Layout.Content>
       <Footer>
+        <Button 
+          onClick={
+            () => Modal.confirm({title: 'ここでの勝利または敗北の発表', cancelText: 'Stay', okText: 'leave', onOk: () => console.log('leave')})
+            }
+        >
+          Win
+        </Button>
         <Switch checkedChildren="matching" unCheckedChildren="unmatching" defaultChecked onChange={() => setMatching(m => !m)} />
       </Footer>
       {
