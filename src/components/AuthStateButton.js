@@ -1,15 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { SuspenseWithPerf, useUser } from 'reactfire'
 import { Typography, Tooltip } from 'antd'
 import LinkButton from './LinkButton'
 
 function FirebaseAuthStateButton() {
   const user = useUser()
-
-  useEffect(() => {
-    console.log(user);
-    
-  }, [])
 
   return !user ?
     <Tooltip placement="bottom" title="ログイン">
