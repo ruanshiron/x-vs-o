@@ -31,12 +31,14 @@ const columns = [
     title: 'losses',
     dataIndex: 'losses',
     key: 'losses',
+    align: 'right',
     render: (losses, record) => <Typography.Title level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{losses}負け</Typography.Title>
   },
   {
     title: 'wins',
     dataIndex: 'wins',
     key: 'wins',
+    align: 'right',
     render: (wins, record) => <Typography.Title level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{wins}勝ち</Typography.Title>
   },
   {

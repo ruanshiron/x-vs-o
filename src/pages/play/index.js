@@ -1,25 +1,25 @@
-import React from 'react'
-import { Layout, Row, Col, Card, Button, Divider, Tag, Typography, Tooltip } from 'antd'
+import React, { useState } from 'react'
+import { Layout, Card, Divider, Typography, Tooltip, Spin, Switch } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 import Footer from '../../components/Footer'
 import Board from '../../components/Board'
 import logo from '../../logo.svg'
-import { Widget } from 'react-chat-widget';
+import { Widget, addResponseMessage } from 'react-chat-widget'
 
-import 'react-chat-widget/lib/styles.css';
+import 'react-chat-widget/lib/styles.css'
 
-const messages = [
-  {
-    "text": "Hello there",
-    "id": "1",
-    "sender": {
-      "name": "Ironman",
-      "uid": "user1",
-      "avatar": "https://data.cometchat.com/assets/images/avatars/ironman.png",
-    },
-  },
-]
+const spinIcon = <LoadingOutlined style={{ fontSize: 64 }} spin />
 
 function Play() {
+
+  const [matching, setMatching] = useState(true)
+
+  const handleNewUserMessage = (newMessage) => {
+    console.log(`New message incoming! ${newMessage}`);
+    // Now send the message throught the backend API
+    addResponseMessage('Welcome to this awesome chat!');
+  }
+
   return (
     <Layout>
       <Layout.Header style={{
@@ -36,25 +36,39 @@ function Play() {
           </a>
         </Tooltip>
       </Layout.Header>
+
       <Layout.Content style={{ marginTop: 64, background: '#fff' }}>
+
         <div className="site-layout-background" >
-          <Card style={{ width: 512, margin: 'auto' }} >
-            <div style={{ justifyContent: 'space-between', display: 'flex' }}>
-              <Typography.Text strong>X : You</Typography.Text>
-              <Typography.Text strong>vs</Typography.Text>
-              <Typography.Text strong>Oponent : O</Typography.Text>
-            </div>
-            <Divider dashed />
-            <Board />
-          </Card>
+          {
+            matching ?
+              <Spin style={{ marginTop: 64 }} size='large' indicator={spinIcon} />
+              :
+              <Card style={{ maxWidth: 512, margin: 'auto' }} >
+                <div style={{ justifyContent: 'space-between', display: 'flex' }}>
+                  <Typography.Text strong>X : You</Typography.Text>
+                  <Typography.Text strong>vs</Typography.Text>
+                  <Typography.Text strong>Oponent : O</Typography.Text>
+                </div>
+                <Divider dashed />
+                <Board />
+              </Card>
+          }
+
         </div>
       </Layout.Content>
-      <Footer />
+      <Footer>
+        <Switch checkedChildren="matching" unCheckedChildren="unmatching" defaultChecked onChange={() => setMatching(m => !m)} />
+      </Footer>
+      {
+        !matching &&
+        <Widget
+          title='Oponent'
+          subtitle=''
+          handleNewUserMessage={handleNewUserMessage}
+        />
+      }
 
-      <Widget
-        title='Oponent'
-        subtitle=''
-      />
     </Layout>
   )
 }

@@ -4,7 +4,7 @@ import { Layout } from 'antd'
 
 function Footer(props) {
   return (
-    <Layout.Footer style={{ textAlign: 'center' }}>Team NaNa</Layout.Footer>
+  <Layout.Footer style={{ textAlign: 'center' }}>{props.children}<br/><br/>Team NaNa</Layout.Footer>
   )
 }
 
