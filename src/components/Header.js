@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Input, Col, Row, Typography, Space, Tooltip } from 'antd'
+import { Layout, Input, Col, Row, Space, Tooltip } from 'antd'
 import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons'
 import logo from '../logo.svg'
 import LinkButton from './LinkButton'

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Row, Col, Typography, Button, Divider } from 'antd'
+import { Card, Row, Col, Typography, Divider } from 'antd'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import History from './history'
 import Stats from './stats'
