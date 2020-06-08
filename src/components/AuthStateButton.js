@@ -1,6 +1,6 @@
 import React from 'react'
 import { SuspenseWithPerf, useUser } from 'reactfire'
-import { Typography, Tooltip } from 'antd'
+import { Typography, Tooltip, Spin } from 'antd'
 import LinkButton from './LinkButton'
 
 function FirebaseAuthStateButton() {
@@ -25,7 +25,7 @@ function AuthStateButton(props) {
     <SuspenseWithPerf
       traceId={'firebase-user-wait'}
       fallback={
-        'loading...'
+        <Spin/>
       }
     >
       <FirebaseAuthStateButton />
