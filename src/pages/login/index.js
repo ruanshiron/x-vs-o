@@ -23,7 +23,7 @@ function Login(props) {
 	const signInWithGoogle = async () => {
 		try {
 			await firebaseConfig.signInWithGoogle()
-			props.history.replace('/dashboard')
+			history.replace('/dashboard')
 		} catch (error) {
 			message.error(error.message)
 		}
