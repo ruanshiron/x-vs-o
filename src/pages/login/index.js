@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import firebaseConfig from '../../firebaseConfig'
-import { Form, Button, Input, Card } from 'antd'
+import { Form, Button, Input, Card, message } from 'antd'
 import { UserOutlined, LockOutlined, GoogleCircleFilled } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import logo from '../../logo.svg'
@@ -123,7 +123,7 @@ function Login(props) {
 				.login(values.email, values.password)
 			history.replace('/')
 		} catch (error) {
-			alert(error.message)
+			message.error(error.message)
 		}
 	}
 
@@ -132,7 +132,7 @@ function Login(props) {
 			await firebaseConfig.signInWithGoogle()
 			props.history.replace('/dashboard')
 		} catch (error) {
-			alert(error.message)
+			message.error(error.message)
 		}
 	}
 
