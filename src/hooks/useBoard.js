@@ -22,7 +22,6 @@ function useBoard() {
 
   useEffect(() => {
     // setHistory(h => [...h, board])
-    console.log(board);
     setMark(m => !m)
   }, [board])
 

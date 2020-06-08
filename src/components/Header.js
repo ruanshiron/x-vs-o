@@ -4,7 +4,7 @@ import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons'
 import logo from '../logo.svg'
 import LinkButton from './LinkButton'
 import { useRouteMatch } from 'react-router-dom'
-import firebaseConfig from '../firebaseConfig'
+import AuthStateButton from './AuthStateButton'
 
 const headerStyle = {
   position: 'fixed',
@@ -31,7 +31,7 @@ function Header({ search }) {
         {
           search ?
             <>
-              <Col xs={0} sm={6} md={6} lg={6} xl={6}>
+              <Col xs={0} sm={0} md={6} lg={6} xl={6}>
                 <Row>
                   <Col offset={1}>
                     <a id='logo' href='/'>
@@ -44,19 +44,19 @@ function Header({ search }) {
               <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                 <Row>
                   <Col offset={1} flex="auto">
-                    <Input placeholder='Search User'></Input>
+                    <Input placeholder='ユーザーを検索'></Input>
                   </Col>
                 </Row>
               </Col>
             </>
             :
             <>
-              <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+              <Col xs={12} sm={12} md={6} lg={6} xl={6}>
                 <Row>
                   <Col offset={1} flex='100%'>
                     <LinkButton type='primary' size='large' to='play'>
-                      NEW GAME
-              </LinkButton>
+                      ニューゲーム
+                    </LinkButton>
                   </Col>
                 </Row>
               </Col>
@@ -66,8 +66,8 @@ function Header({ search }) {
                     <Row justify='center'>
                       <a id='logo' href='/'>
                         <img alt='logo' src={logo} />
-                X vs O
-              </a>
+                        X vs O
+                      </a>
                     </Row>
                   </Col>
                 </Row>
@@ -75,7 +75,7 @@ function Header({ search }) {
             </>
         }
 
-        <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+        <Col xs={11} sm={7} md={5} lg={5} xl={5} offset={1}>
           <Row justify="end">
             <Col pull={1}>
               <Space>
@@ -99,20 +99,7 @@ function Header({ search }) {
                   />
                 </Tooltip>
 
-                {
-                  firebaseConfig.auth.currentUser ?
-                    <Tooltip placement="bottom" title="プロフィール">
-                      <LinkButton to={`/social/${firebaseConfig.auth.currentUser.uid}`} type="text" shape="round" size='large'>
-                        <Typography.Text strong>{firebaseConfig.auth.currentUser.displayName}</Typography.Text>
-                      </LinkButton>
-                    </Tooltip>
-                    :
-                    <Tooltip placement="bottom" title="ログイン">
-                      <LinkButton to='/login' type="default" size='large'>
-                        <Typography.Text strong>LOGIN</Typography.Text>
-                      </LinkButton>
-                    </Tooltip>
-                }
+                <AuthStateButton />
               </Space>
             </Col>
           </Row>

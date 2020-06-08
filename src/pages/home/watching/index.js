@@ -8,7 +8,7 @@ function Watching() {
     <div className="site-layout-background" >
       <Card style={{ width: 512, margin: 'auto' }} >
         <Input.Search
-          placeholder="input search text"
+          placeholder="進行中の対戦のコードを入力"
           onSearch={value => console.log(value)}
           style={{margin: 'auto'}}
           enterButton
