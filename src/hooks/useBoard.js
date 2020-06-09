@@ -17,12 +17,11 @@ function init_board() {
 function useBoard() {
 
   const [board, setBoard] = useState(init_board())
-  const [history, setHistory] = useState([])
+  // const [history, setHistory] = useState([])
   const [mark, setMark] = useState(false)
 
   useEffect(() => {
-    setHistory(h => [...h, board])
-    console.log(board);
+    // setHistory(h => [...h, board])
     setMark(m => !m)
   }, [board])
 
