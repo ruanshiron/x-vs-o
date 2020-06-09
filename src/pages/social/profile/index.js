@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Row, Col, Typography, Button, Divider } from 'antd'
+import { Card, Row, Col, Typography, Divider } from 'antd'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import History from './history'
 import Stats from './stats'
+import LogoutButton from '../../../components/LogoutButton'
 
 
 const tabList = [
   {
     key: 'stats',
-    tab: 'Thống kê',
+    tab: '統計',
   },
   {
     key: 'play-history',
-    tab: 'Lịch sử đấu',
+    tab: '対戦履歴',
   }
 ]
 
@@ -64,11 +65,11 @@ function Profile(props) {
               <Typography.Paragraph strong >example@mail.com</Typography.Paragraph>
             </Row>
             <Row>
-              <Link to="/login">change passsword</Link>
+              <Link to="/login">パスワードを変更</Link>
             </Row>
             <Divider />
             <Row>
-              <Button type='dashed' danger style={{ width: '100%' }}>Logout</Button>
+              <LogoutButton/>
             </Row>
           </Col>
           <Col span={18} offset={1}>
