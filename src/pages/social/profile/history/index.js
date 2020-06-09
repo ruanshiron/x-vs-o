@@ -8,13 +8,13 @@ const data = [
     win: true,
     point: 10,
     opponent: 'vinh1',
-    time: new Date(2018, 11, 24, 10, 33, 30, 0)
+    time: new Date().toISOString()
   },
   {
     win: false,
     point: -10,
     opponent: 'hellomudkjan',
-    time: new Date(2018, 1, 24, 10, 33, 30, 0)
+    time: new Date().toISOString()
   }
 ]
 
