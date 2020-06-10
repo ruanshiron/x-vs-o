@@ -47,7 +47,7 @@ const columns = [
     key: 'time',
     dataIndex: 'time',
     align: 'right',
-    render: (time) => (time.toLocaleString('ja-JP')),
+    render: (time) => (time.toISOString()),
   }
 ];
 
