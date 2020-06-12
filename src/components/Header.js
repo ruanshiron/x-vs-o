@@ -16,7 +16,44 @@ const headerStyle = {
   borderColor: '#F0F0F0'
 }
 
-function Header({ search }) {
+function DashboardButton({ match }) {
+  return (
+    <Tooltip placement="bottom" title="ダッシュボード">
+      <LinkButton
+        type={match ? 'primary' : 'dashed'}
+        size='large'
+        icon={<SettingOutlined />}
+        to='/dashboard'
+      />
+    </Tooltip>
+  )
+}
+
+function RankingButton({ match }) {
+  return (
+    <Tooltip placement="bottom" title="ランキング">
+      <LinkButton
+        type={match ? 'primary' : 'dashed'}
+        size='large'
+        icon={<OrderedListOutlined />}
+        to='/social'
+      />
+    </Tooltip>
+  )
+}
+
+function Logo(params) {
+  return (
+    <a id='logo' href='/'>
+      <img alt='logo' src={logo} />
+      X vs O
+    </a>
+  )
+}
+
+
+
+function Header({ hasLogo, hasNewGameButton, hasOtherButton, hasSearchBar }) {
   let admin = true
 
   let matchDashboard = useRouteMatch('/dashboard')
@@ -29,81 +66,53 @@ function Header({ search }) {
     <Layout.Header style={headerStyle}>
       <Row>
         {
-          search ?
-            <>
-              <Col xs={0} sm={0} md={6} lg={6} xl={6}>
-                <Row>
-                  <Col offset={1}>
-                    <a id='logo' href='/'>
-                      <img alt='logo' src={logo} />
-                  X vs O
-                </a>
-                  </Col>
-                </Row>
+          hasNewGameButton &&
+          <Col xs={3} sm={3} md={6} lg={6} xl={6}>
+            <Row>
+              <Col offset={1}>
+                <LinkButton type='primary' size='large' to='play'>ニューゲーム</LinkButton>
               </Col>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                <Row>
-                  <Col offset={1} flex="auto">
-                    <Input placeholder='ユーザーを検索'></Input>
-                  </Col>
-                </Row>
-              </Col>
-            </>
-            :
-            <>
-              <Col xs={12} sm={12} md={6} lg={6} xl={6}>
-                <Row>
-                  <Col offset={1} flex='100%'>
-                    <LinkButton type='primary' size='large' to='play'>
-                      ニューゲーム
-                    </LinkButton>
-                  </Col>
-                </Row>
-              </Col>
-              <Col xs={0} sm={8} md={12} lg={12} xl={12}>
-                <Row>
-                  <Col offset={1} flex="auto">
-                    <Row justify='center'>
-                      <a id='logo' href='/'>
-                        <img alt='logo' src={logo} />
-                        X vs O
-                      </a>
-                    </Row>
-                  </Col>
-                </Row>
-              </Col>
-            </>
+            </Row>
+          </Col>
         }
 
-        <Col xs={11} sm={7} md={5} lg={5} xl={5} offset={1}>
-          <Row justify="end">
-            <Col pull={1}>
-              <Space>
-                {
-                  admin &&
-                  <Tooltip placement="bottom" title="ダッシュボード">
-                    <LinkButton
-                      type={matchDashboard?'primary':'dashed'}
-                      size='large'
-                      icon={<SettingOutlined />}
-                      to='/dashboard'
-                    />
-                  </Tooltip>
-                }
-                <Tooltip placement="bottom" title="ランキング">
-                  <LinkButton
-                    type={matchSocial?'primary':'dashed'}
-                    size='large'
-                    icon={<OrderedListOutlined />}
-                    to='/social'
-                  />
-                </Tooltip>
+        {
+          hasLogo &&
+          <Col xs={0} sm={0} md={6} lg={6} xl={6}>
+            <Row>
+              <Col offset={1}>
+                <Logo />
+              </Col>
+            </Row>
+          </Col>
+        }
 
-                <AuthStateButton />
-              </Space>
-            </Col>
-          </Row>
-        </Col>
+        {
+          hasSearchBar &&
+          <Col xs={8} sm={8} md={12} lg={12} xl={12}>
+            <Row>
+              <Col offset={1} flex="auto">
+                <Input placeholder='ユーザーを検索'></Input>
+              </Col>
+            </Row>
+          </Col>
+        }
+
+        {
+          hasOtherButton &&
+          <Col xs={8} sm={8} md={5} lg={5} xl={5} offset={1}>
+            <Row justify="end">
+              <Col pull={1}>
+                <Space>
+                  {admin && <DashboardButton match={matchDashboard} />}
+                  <RankingButton match={matchSocial} />
+                  <AuthStateButton />
+                </Space>
+              </Col>
+            </Row>
+          </Col>
+        }
+
       </Row>
     </Layout.Header>
   )

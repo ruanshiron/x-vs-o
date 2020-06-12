@@ -13,7 +13,7 @@ export const firebaseConfig = {
   measurementId: "G-D01685HRGR"
 };
 
-const provider = new firebase.auth.GoogleAuthProvider();
+export const provider = new firebase.auth.GoogleAuthProvider();
 
 class Firebase {
 	constructor() {

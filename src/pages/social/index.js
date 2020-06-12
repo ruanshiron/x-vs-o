@@ -17,7 +17,11 @@ function Social() {
   }, [pathname])
   return (
     <Layout>
-      <SocialHeader search/>
+      <SocialHeader 
+        hasSearchBar
+        hasOtherButton
+        hasLogo
+      />
       <Content style={contentStyle}>
         <Switch>
           <Route path="/social/:username">

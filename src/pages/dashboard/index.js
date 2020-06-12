@@ -72,7 +72,11 @@ const columns = [
 function Dashboard() {
   return (
     <Layout>
-      <DashboardHeader search />
+      <DashboardHeader 
+        hasLogo
+        hasSearchBar
+        hasOtherButton
+      />
       <Layout.Content style={contentStyle}>
         <div className="site-layout-background" >
           <Card style={{ width: '100%', marginTop: 16 }} >
