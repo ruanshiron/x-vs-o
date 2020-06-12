@@ -42,73 +42,56 @@ function RankingButton({ match }) {
   )
 }
 
-function Logo(params) {
+function Logo() {
   return (
-    <a id='logo' href='/'>
-      <img alt='logo' src={logo} />
-      X vs O
-    </a>
+    <Row justify='center'>
+      <a id='logo' href='/'>
+        <img alt='logo' src={logo} />
+        X vs O
+      </a>
+    </Row>
+
   )
 }
 
-
-
-function Header({ hasLogo, hasNewGameButton, hasOtherButton, hasSearchBar }) {
+function Header() {
   let admin = true
 
-  let matchDashboard = useRouteMatch('/dashboard')
-  let matchSocial = useRouteMatch({
-    path: '/social',
-    exact: true
-  })
+  let matchDashboard = useRouteMatch({ path: '/dashboard', exact: false })
+  let matchSocial = useRouteMatch({ path: '/social', exact: true })
+  let matchHome = useRouteMatch({ path: '/', exact: true })
+  let matchPlay = useRouteMatch({ path: '/play', exact: false })
 
   return (
     <Layout.Header style={headerStyle}>
-      <Row>
+      <Row justify="space-between">
         {
-          hasNewGameButton &&
-          <Col xs={3} sm={3} md={6} lg={6} xl={6}>
-            <Row>
-              <Col offset={1}>
-                <LinkButton type='primary' size='large' to='play'>ニューゲーム</LinkButton>
-              </Col>
-            </Row>
+          matchHome &&
+          <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+            <LinkButton type='primary' size='large' to='play'>ニューゲーム</LinkButton>
+          </Col>
+        }
+
+        <Col xs={0} sm={0} md={4} lg={4} xl={4}>
+          <Logo />
+        </Col>
+
+        {
+          !(matchHome || matchPlay) &&
+          <Col xs={12} sm={8} md={4} lg={4} xl={4}>
+            <Input placeholder='ユーザーを検索'></Input>
           </Col>
         }
 
         {
-          hasLogo &&
-          <Col xs={0} sm={0} md={6} lg={6} xl={6}>
-            <Row>
-              <Col offset={1}>
-                <Logo />
-              </Col>
-            </Row>
-          </Col>
-        }
-
-        {
-          hasSearchBar &&
-          <Col xs={8} sm={8} md={12} lg={12} xl={12}>
-            <Row>
-              <Col offset={1} flex="auto">
-                <Input placeholder='ユーザーを検索'></Input>
-              </Col>
-            </Row>
-          </Col>
-        }
-
-        {
-          hasOtherButton &&
-          <Col xs={8} sm={8} md={5} lg={5} xl={5} offset={1}>
+          !matchPlay &&
+          <Col xs={4} sm={8} md={4} lg={4} xl={4}>
             <Row justify="end">
-              <Col pull={1}>
-                <Space>
-                  {admin && <DashboardButton match={matchDashboard} />}
-                  <RankingButton match={matchSocial} />
-                  <AuthStateButton />
-                </Space>
-              </Col>
+              <Space>
+                <AuthStateButton />
+                <RankingButton match={matchSocial} />
+                {admin && <DashboardButton match={matchDashboard} />}
+              </Space>
             </Row>
           </Col>
         }

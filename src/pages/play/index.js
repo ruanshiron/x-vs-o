@@ -1,30 +1,26 @@
-import React, { useState } from 'react'
-import { Layout, Spin, Switch, Button, Modal } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import React, { useContext } from 'react'
+import { Layout, Button, Modal } from 'antd'
 import Footer from '../../components/Footer'
 import Game from '../../components/Game'
 
 import 'react-chat-widget/lib/styles.css'
-import { SuspenseWithPerf } from 'reactfire'
 import Header from '../../components/Header'
+import { UserContext } from '../../contexts/UserContextProvider'
 
-const spinIcon = <LoadingOutlined style={{ fontSize: 64 }} spin />
 
 function Play() {
-
-  const [matching, setMatching] = useState(true)
-
+  const { signedInUser } = useContext(UserContext)
 
   return (
     <Layout>
-      <Header
-        hasLogo
-      />
+      <Header />
+
       <Layout.Content style={{ marginTop: 64, background: '#fff' }}>
         <div className="site-layout-background" >
-          <Game />
+          {signedInUser && <Game />}
         </div>
       </Layout.Content>
+
       <Footer>
         <Button
           onClick={
@@ -33,7 +29,6 @@ function Play() {
         >
           Win
         </Button>
-        <Switch checkedChildren="matching" unCheckedChildren="unmatching" defaultChecked onChange={() => setMatching(m => !m)} />
       </Footer>
 
     </Layout>

@@ -4,8 +4,7 @@ import { Form, Button, Input, Card, message } from 'antd'
 import { UserOutlined, LockOutlined, GoogleCircleFilled } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import logo from '../logo.svg'
-import { useAuth } from 'reactfire'
-import { provider } from '../firebaseConfig'
+import useAuth from '../hooks/useAuth'
 
 function LoginForm(props) {
   let history = useHistory()
@@ -13,7 +12,7 @@ function LoginForm(props) {
   
   const onFinish = async ({email, password}) => {
     try {
-      await auth.signInWithEmailAndPassword(email, password)
+      await auth.login(email, password)
       history.replace('/')
     } catch (error) {
       message.error(error.message)
@@ -22,7 +21,7 @@ function LoginForm(props) {
 
 	const signInWithGoogle = async () => {
 		try {
-			await auth.signInWithPopup(provider)
+			await auth.signInWithGoogle()
 			history.replace('/')
 		} catch (error) {
 			message.error(error.message)

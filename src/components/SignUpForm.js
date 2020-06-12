@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Input, Card, Button, Tooltip, Typography, message } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
-import { useAuth, useFirestore } from 'reactfire'
+import firebase from 'firebase/app'
 
 const formItemLayout = {
   labelAlign: 'left',
@@ -32,8 +32,8 @@ const tailFormItemLayout = {
 function SignupForm(props) {
   const [form] = Form.useForm()
   let history = useHistory()
-  const auth = useAuth()
-  const db = useFirestore()
+  const auth = firebase.auth()
+  const db = firebase.firestore()
 
   const onFinish = async values => {
     let { name, email, password } = values
