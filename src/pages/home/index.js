@@ -10,7 +10,11 @@ const contentStyle = { marginTop: 64, background: '#fff' }
 function Home() {
   return (
     <Layout>
-      <HomeHeader />
+      <HomeHeader 
+        hasNewGameButton
+        hasSearchBar
+        hasOtherButton
+      />
 
       <Content style={contentStyle}>
         <Watching />
