@@ -1,31 +1,31 @@
-import React, { useEffect } from 'react'
-import { Card, Divider, Spin } from 'antd'
+import React, { useContext } from 'react'
+import { Card, Divider } from 'antd'
 import Board from './Board'
 import useGameState from '../hooks/useGameState'
 import ChatBox from './ChatBox'
 import TurnBar from './TurnBar'
-import { useUser, SuspenseWithPerf } from 'reactfire'
+import { UserContext } from '../contexts/UserContextProvider'
 
 const styleGameBoard = { maxWidth: 512, margin: 'auto' }
 
-function BoardWithUser({ user }) {
-  const { matchId } = useGameState(user)
+
+function Game() {
+  const { signedInUser } = useContext(UserContext)
+
+  const { matchId } = useGameState(signedInUser)
+
 
   return (
-    matchId && <Board />
-  )
-}
-
-function GamePendingUser() {
-  const user = useUser()
-
-  return (
-    user &&
     <>
       <Card style={styleGameBoard} >
-        <TurnBar />
-        <Divider dashed />
-        <BoardWithUser user={user} />
+        {
+          matchId &&
+          <>
+            <TurnBar />
+            <Divider dashed />
+            <Board />
+          </>
+        }
       </Card>
 
       <ChatBox />
@@ -33,18 +33,6 @@ function GamePendingUser() {
   )
 }
 
-function Game() {
 
-  return (
-    <SuspenseWithPerf
-      traceId={'firebase-user-wait-for-game'}
-      fallback={
-        <Spin />
-      }
-    >
-      <GamePendingUser />
-    </SuspenseWithPerf>
-  )
-}
 
 export default Game

@@ -1,35 +1,24 @@
-import React from 'react'
-import { SuspenseWithPerf, useUser } from 'reactfire'
-import { Typography, Tooltip, Spin } from 'antd'
+import React, { useContext } from 'react'
+import { Typography, Tooltip } from 'antd'
 import LinkButton from './LinkButton'
-
-function FirebaseAuthStateButton() {
-  const user = useUser()
-
-  return !user ?
-    <Tooltip placement="bottom" title="ログイン">
-      <LinkButton to='/login' type="default" size='large'>
-        <Typography.Text strong>ログイン</Typography.Text>
-      </LinkButton>
-    </Tooltip>
-    :
-    <Tooltip placement="bottom" title="プロフィール">
-      <LinkButton to={`/social/${user.uid}`} type="text" shape="round" size='large'>
-        <Typography.Text strong>{user.displayName}</Typography.Text>
-      </LinkButton>
-    </Tooltip>
-}
+import { UserContext } from '../contexts/UserContextProvider'
 
 function AuthStateButton(props) {
+  const { signedInUser } = useContext(UserContext)
+  
   return (
-    <SuspenseWithPerf
-      traceId={'firebase-user-wait'}
-      fallback={
-        <Spin/>
-      }
-    >
-      <FirebaseAuthStateButton />
-    </SuspenseWithPerf>
+    signedInUser ?
+      <Tooltip placement="bottom" title="プロフィール">
+        <LinkButton to={`/social/${signedInUser.uid}`} type="text" shape="round" size='large'>
+          <Typography.Text strong>{signedInUser.displayName}</Typography.Text>
+        </LinkButton>
+      </Tooltip>
+      :
+      <Tooltip placement="bottom" title="ログイン">
+        <LinkButton to='/login' type="default" size='large'>
+          <Typography.Text strong>ログイン</Typography.Text>
+        </LinkButton>
+      </Tooltip>
   )
 }
 

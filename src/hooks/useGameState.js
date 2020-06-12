@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
-import firebase from 'firebase'
-
-const db = firebase.firestore()
-const matchRef = db.collection('matches')
-
+import firebase from 'firebase/app'
 
 function useGameState(user) {
+  const db = firebase.firestore()
+  const matchRef = db.collection('matches')
 
   const [matchId, setMatchId] = useState(null)
 
@@ -17,7 +15,7 @@ function useGameState(user) {
   useEffect(() => {
     matchRef.where('state', '==', 0).limit(1).get()
       .then((snapshot) => {
-        if (snapshot.size == 0) {
+        if (snapshot.size === 0) {
           matchRef.add(newMatch)
             .then(r => {
               setMatchId(r.id)

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Layout, Card, Tag, Table, Button } from 'antd'
 import { Link } from 'react-router-dom'
-import DashboardHeader from '../../components/Header'
+import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
 const contentStyle = { marginTop: 64, background: '#fff' }
 
 const data = [
-  
+
 ]
 
 for (let index = 0; index < 200; index++) {
@@ -27,6 +27,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (text) => <Link>{text}</Link>,
+    fixed: 'left'
   },
   {
     title: 'Top',
@@ -72,11 +73,7 @@ const columns = [
 function Dashboard() {
   return (
     <Layout>
-      <DashboardHeader 
-        hasLogo
-        hasSearchBar
-        hasOtherButton
-      />
+      <Header />
       <Layout.Content style={contentStyle}>
         <div className="site-layout-background" >
           <Card style={{ width: '100%', marginTop: 16 }} >
@@ -84,11 +81,13 @@ function Dashboard() {
               columns={columns}
               pagination={{ position: ['topLeft', 'bottomRight'] }}
               dataSource={data}
+
+              scroll={{ x: true }}
             />
           </Card>
         </div>
       </Layout.Content>
-      <Footer/>
+      <Footer />
     </Layout>
   )
 }

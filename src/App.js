@@ -1,82 +1,70 @@
-import React from 'react';
+import React from 'react'
+
 import {
   BrowserRouter as Router,
   Switch,
   Route
-} from "react-router-dom";
-import {
-  useFirebaseApp,
-  preloadAuth,
-  preloadFirestore,
-  preloadDatabase,
-  preloadStorage,
-  preloadRemoteConfig
-} from 'reactfire';
-import Home from './pages/home';
-import Login from './pages/login';
-import Play from './pages/play';
-import Signup from './pages/signup';
-import Social from './pages/social';
-import Dashboard from './pages/dashboard';
+} from "react-router-dom"
+
+import Home from './pages/home'
+import Login from './pages/login'
+import Play from './pages/play'
+import SignUp from './pages/signup'
+import Social from './pages/social'
+import Dashboard from './pages/dashboard'
 
 import './style.css'
+import UserContextProvider from './contexts/UserContextProvider'
 
-const preloadSDKs = firebaseApp => {
-  return Promise.all([
-    preloadFirestore({
-      firebaseApp,
-      setup(firestore) {
-        return firestore().enablePersistence(/*{ synchronizeTabs: true }*/);
-      }
-    }),
-    preloadDatabase({ firebaseApp }),
-    preloadStorage({
-      firebaseApp,
-      setup(storage) {
-        return storage().setMaxUploadRetryTime(10000);
-      }
-    }),
-    preloadAuth({ firebaseApp }),
-    preloadRemoteConfig({
-      firebaseApp,
-      setup(remoteConfig) {
-        remoteConfig().settings = {
-          minimumFetchIntervalMillis: 10000,
-          fetchTimeoutMillis: 10000
-        };
-        return remoteConfig().fetchAndActivate();
-      }
-    })
-  ]);
-};
+const routes = [
+  {
+    path: '/',
+    exact: true,
+    component: <Home />
+  },
+  {
+    path: '/dashboard',
+    exact: false,
+    component: <Dashboard />
+  },
+  {
+    path: '/login',
+    exact: false,
+    component: <Login />
+  },
+  {
+    path: '/signup',
+    exact: false,
+    component: <SignUp />
+  },
+  {
+    path: '/social',
+    exact: false,
+    component: <Social />
+  },
+  {
+    path: '/play',
+    exact: false,
+    component: <Play />
+  }
+]
 
 function App() {
-  const firebaseApp = useFirebaseApp();
-  preloadSDKs(firebaseApp)
-  
+
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/play">
-          <Play />
-        </Route>
-        <Route path="/social">
-          <Social />
-        </Route>
-        <Route exact path="/dashboard">
-          <Dashboard />
-        </Route>
-      </Switch>
-    </Router>
+    <UserContextProvider>
+      <Router>
+        <Switch>
+          {
+            routes.map(({ component, ...rest }, i) =>
+              <Route {...rest} key={i}>
+                { component }
+              </Route>
+            )
+          }
+        </Switch>
+      </Router>
+    </UserContextProvider>
   );
 }
 
