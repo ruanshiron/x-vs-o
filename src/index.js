@@ -10,9 +10,9 @@ import 'antd/dist/antd.css'
 import './firebase'
 
 ReactDOM.render(
-  <React>
+  <React.StrictMode>
     <App />
-  </React>,
+  </React.StrictMode>,
   document.getElementById('root')
 )
 
