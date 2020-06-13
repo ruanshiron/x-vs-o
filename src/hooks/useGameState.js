@@ -5,7 +5,7 @@ function useGameState(user) {
   const db = firebase.firestore()
   const matchRef = db.collection('matches')
 
-  const [matchId, setMatchId] = useState(null)
+  const [matchId, setMatchId] = useState(false)
 
   const newMatch = {
     users: [user.uid],

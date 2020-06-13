@@ -1,10 +1,10 @@
 import React from 'react'
 import Square from './Square'
-import useBoard from '../hooks/useBoard'
+import useBoardState from '../hooks/useBoardState'
 
 
-function Board() {
-  const {board, move} = useBoard()
+function Board({ matchId }) {
+  const {board, move} = useBoardState(matchId)
   return (
     <div className="board-container">
       <div className="board">
