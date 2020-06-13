@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Card, Divider } from 'antd'
 import Board from './Board'
 import useGameState from '../hooks/useGameState'
@@ -14,6 +14,9 @@ function Game() {
 
   const { matchId } = useGameState(signedInUser)
 
+  useEffect(() => {
+    console.log(matchId)
+  }, [matchId])
 
   return (
     <>
@@ -23,7 +26,7 @@ function Game() {
           <>
             <TurnBar />
             <Divider dashed />
-            <Board />
+            <Board matchId={matchId}/>
           </>
         }
       </Card>
