@@ -1,26 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {  Tag, Table } from 'antd'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import LinkButton from '../../../../components/LinkButton'
+import useMatchHistory from '../../../../hooks/useMatchHistory'
 
-const data = [
-  {
-    win: true,
-    point: 10,
-    opponent: 'vinh1',
-    time: new Date(2018, 11, 24, 10, 33, 30, 0)
-  },
-  {
-    win: false,
-    point: -10,
-    opponent: 'hellomudkjan',
-    time: new Date(2018, 1, 24, 10, 33, 30, 0)
-  }
-]
-
-for (let index = 0; index < 3; index++) {
-  data.push(...data)
-}
 
 
 const columns = [
@@ -43,17 +26,20 @@ const columns = [
     render: (opponent) => <LinkButton type='link' to={`/social/${opponent}`} >{opponent}</LinkButton>
   },
   {
-    title: 'Time',
-    key: 'time',
-    dataIndex: 'time',
+    title: 'Created',
+    key: 'created',
+    dataIndex: 'created',
     align: 'right',
-    render: (time) => (time.toLocaleString('ja-JP')),
+    render: (created) => (created.toLocaleString('ja-JP')),
   }
 ];
 
 function History({ defaultPage }) {
+  let { uid } = useParams()
   let history = useHistory()
   let location = useLocation()
+  const { data } = useMatchHistory(uid)
+
 
   return (
     <Table

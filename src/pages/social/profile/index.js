@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { Card, Row, Col, Typography, Divider } from 'antd'
+import React, { useState, useEffect, useContext } from 'react'
+import { Card, Row, Col, Typography, Divider, Button, Modal } from 'antd'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import History from './history'
 import Stats from './stats'
 import LogoutButton from '../../../components/LogoutButton'
+import useProfile from '../../../hooks/useProfile'
+import { firestore } from '../../../firebase'
+import ChangePasswordModal from '../../../components/ChangePasswordModal'
+import { UserContext } from '../../../contexts/UserContextProvider'
 
 
 const tabList = [
@@ -30,11 +34,17 @@ const contentList = (key) => (props) => {
 
 function Profile(props) {
   let location = useLocation()
-  let { username } = useParams()
+  let { uid } = useParams()
+  const { profile, changeDisplayName } = useProfile(uid)
+  const [key, setKey] = useState('stats')
+  const [visible, setVisible] = useState(false)
+  const [historyDefaultPage, setHistoryDefaultPage] = useState(1)
+  const [passwordIsChangeable, setPasswordIsChangeable] = useState(false)
+  const { signedInUser } = useContext(UserContext)
 
   useEffect(() => {
     let p = location.search.match(/\?(\w)(=(\d+))?/)
-    console.log(username);
+    console.log(uid);
 
     if (p)
       if (p[1] === 'p') {
@@ -45,10 +55,25 @@ function Profile(props) {
         }
       }
 
-  }, [location, username])
+  }, [location, uid])
 
-  const [key, setKey] = useState('stats')
-  const [historyDefaultPage, setHistoryDefaultPage] = useState(1)
+  useEffect(() => {
+    if (signedInUser?.uid === uid && signedInUser?.providerData[0].providerId === "password")
+      setPasswordIsChangeable(true)
+    else
+      setPasswordIsChangeable(false)
+  }, [signedInUser, uid])
+
+
+  const onFinishedChangeDisplayName = (value) => {
+    changeDisplayName(value)
+  }
+
+  const showChangePasswordModal = () => {
+    console.log(signedInUser?.providerData[0]);
+    
+    setVisible(true)
+  }
 
   return (
     <div className="site-layout-background" >
@@ -59,17 +84,22 @@ function Profile(props) {
               <img id='profile-avatar' src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' alt='avatar' />
             </Row>
             <Row>
-              <Typography.Paragraph strong editable>username</Typography.Paragraph>
+              <Typography.Paragraph strong editable={{ onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>
             </Row>
             <Row>
-              <Typography.Paragraph strong >example@mail.com</Typography.Paragraph>
+              <Typography.Paragraph strong >{profile.email}</Typography.Paragraph>
             </Row>
-            <Row>
-              <Link to="/login">パスワードを変更</Link>
-            </Row>
+
+            {
+              passwordIsChangeable &&
+              <Row>
+                <Button type='link' onClick={() => showChangePasswordModal()}>パスワードを変更</Button>
+              </Row>
+            }
+
             <Divider />
             <Row>
-              <LogoutButton/>
+              <LogoutButton />
             </Row>
           </Col>
           <Col span={18} offset={1}>
@@ -86,6 +116,8 @@ function Profile(props) {
           </Col>
         </Row>
       </Card>
+
+      <ChangePasswordModal visible={visible} handleCancel={() => setVisible(false)} />
     </div>
   )
 }

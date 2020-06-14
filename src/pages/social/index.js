@@ -20,7 +20,7 @@ function Social() {
       <Header />
       <Content style={contentStyle}>
         <Switch>
-          <Route path="/social/:username">
+          <Route path="/social/:uid">
             <Profile />
           </Route>
           <Route exact path="/social">
