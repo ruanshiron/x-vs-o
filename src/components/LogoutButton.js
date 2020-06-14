@@ -1,10 +1,9 @@
 import React from 'react'
 import { Button } from 'antd'
-import { useAuth } from 'reactfire'
 import { useHistory } from 'react-router-dom'
+import { auth } from '../firebase'
 
 function LogoutButton(props) {
-  const auth = useAuth()
   const history = useHistory()
   return (
     <Button 

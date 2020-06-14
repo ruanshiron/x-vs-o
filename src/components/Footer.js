@@ -1,10 +1,13 @@
 import React from 'react'
-import { Layout } from 'antd'
+import { Layout, Typography } from 'antd'
 
 
 function Footer(props) {
   return (
-  <Layout.Footer style={{ textAlign: 'center' }}>{props.children}<br/><br/>Team NaNa</Layout.Footer>
+  <Layout.Footer style={{ textAlign: 'center' }}>
+    {props.children}
+    <Typography.Text strong>ナナ</Typography.Text>
+  </Layout.Footer>
   )
 }
 

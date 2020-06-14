@@ -6,7 +6,7 @@ import Board from '../../../components/Board'
 function Watching() {
   return (
     <div className="site-layout-background" >
-      <Card style={{ width: 512, margin: 'auto' }} >
+      <Card style={{ maxWidth: 512, margin: 'auto' }} >
         <Input.Search
           placeholder="進行中の対戦のコードを入力"
           onSearch={value => console.log(value)}
@@ -14,7 +14,7 @@ function Watching() {
           enterButton
         />
         <Divider dashed/>
-        <Board />
+        {/* <Board /> */}
       </Card>
     </div>
   )
