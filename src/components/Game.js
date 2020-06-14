@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
-import { Card, Divider, Spin } from 'antd'
+import { Card, Spin } from 'antd'
 import Board from './Board'
 import useGameState from '../hooks/useGameState'
-import TurnBar from './TurnBar'
 import { LoadingOutlined } from '@ant-design/icons'
 
 const styleGameBoard = { maxWidth: 512, margin: 'auto' }
@@ -22,8 +21,6 @@ function Game() {
       {
         match ?
           <>
-            <TurnBar />
-            <Divider dashed />
             <Board match={match} />
           </>
           :

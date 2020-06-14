@@ -95,7 +95,8 @@ function useBoardState(match) {
   return {
     board,
     move,
-    mark
+    mark,
+    isYourTurn
   }
 }
 
