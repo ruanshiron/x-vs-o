@@ -1,10 +1,10 @@
 import React from 'react'
 import Square from './Square'
-import useBoard from '../hooks/useBoard'
+import useBoardState from '../hooks/useBoardState'
 
 
-function Board() {
-  const {board, move} = useBoard()
+function Board({ match }) {
+  const { board, move } = useBoardState(match)
   return (
     <div className="board-container">
       <div className="board">
@@ -19,12 +19,8 @@ function Board() {
                   <Square
                     key={j}
                     mark={sx}
-                    onClick={(e) => {
-                      console.log(i +''+ j);
-                      
-                      move(i, j)
-                    }}
-                    // disabled={winner != null ? true : false}
+                    onClick={() => move(i, j)}
+                  // disabled={winner != null ? true : false}
                   />
                 ))
               }
