@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { firestore } from '../firebase'
 import { won } from '../util'
 import { UserContext } from '../contexts/UserContextProvider'
 import { Modal } from 'antd'
+import { SmileTwoTone, MehTwoTone } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 
 // TODO: Firebase here 
@@ -31,26 +32,31 @@ function useBoardState(match) {
 
   useEffect(() => {
 
-    firestore.collection("matches").doc(match.id)
-      .onSnapshot((doc) => {
-        const { board, turn, winner } = doc.data()
+    matchRef.onSnapshot((doc) => {
+      const { board, turn, winner } = doc.data()
 
-        if (board) setBoard(JSON.parse(board))
-        if (turn === mark) setIsYourTurn(true)
+      if (board) setBoard(JSON.parse(board))
+      if (turn === mark) setIsYourTurn(true)
 
-        if (winner !== -1) {
-          setIsYourTurn(false)
+      if (winner !== -1) {
+        setIsYourTurn(false)
 
-          const title = winner === mark ? 'Victory' : 'Defeat' 
+        const promt = winner === mark ?
+          { title: '勝利', message: '最高です！', icon: <SmileTwoTone /> }
+          :
+          { title: '敗北', message: '次の対戦に頑張りましょう！', icon: <MehTwoTone /> }
 
-          Modal.confirm({
-            title: title,
-            cancelText: 'Stay',
-            okText: 'leave',
-            onOk: () => history.replace('/')
-          })
-        }
-      })
+        Modal.confirm({
+          title: promt.title,
+          content: promt.message,
+          icon: promt.icon,
+          cancelText: '留まる',
+          okText: '離れる',
+          onOk: () => history.replace('/')
+        })
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function move(x, y) {
