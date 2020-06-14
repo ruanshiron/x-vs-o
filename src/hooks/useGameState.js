@@ -1,47 +1,75 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import firebase from 'firebase/app'
+import { UserContext } from '../contexts/UserContextProvider'
 
-function useGameState(user) {
+function useGameState() {
   const db = firebase.firestore()
   const matchRef = db.collection('matches')
 
-  const [matchId, setMatchId] = useState(false)
+  const [match, setMatch] = useState()
+  const { signedInUser } = useContext(UserContext)
 
   const newMatch = {
-    users: [user.uid],
-    state: 0
+    users: [signedInUser.uid],
+    state: 0,
+    turn: 0,
+    winner: -1
   }
 
   useEffect(() => {
     matchRef.where('state', '==', 0).limit(1).get()
       .then((snapshot) => {
-        if (snapshot.size === 0) {
+        if (snapshot.size === 0) { // create new match and wait other player
           matchRef.add(newMatch)
             .then(r => {
-              setMatchId(r.id)
+              const unsubscribe = matchRef.doc(r.id).onSnapshot((doc) => {
+                if (doc.data().state === 1) {
+
+                  setMatch({
+                    ...doc.data(),
+                    id: doc.id
+                  })
+
+                  unsubscribe()
+                }
+              })
             })
-        } else {
+        } else { // matchmaking done
           snapshot.forEach((doc) => {
             const match = doc.data()
+            if (match.users.includes(signedInUser.uid)) {
+              const unsubscribe = matchRef.doc(doc.id).onSnapshot((xdoc) => {
+                if (xdoc.data().state === 1) {
+                  setMatch({
+                    ...xdoc.data(),
+                    id: xdoc.id
+                  })
 
-            if (match.users.includes(user.uid)) {
-              setMatchId(doc.id)
-            } else {
-              matchRef.doc(doc.id).set({
-                users: [...match.users, user.uid],
-                state: 1
+                  unsubscribe()
+                }
               })
+            } else {
+              const updateMatch = {
+                ...newMatch,
+                users: [...match.users, signedInUser.uid],
+                state: 1
+              }
+              matchRef.doc(doc.id).set(updateMatch)
                 .then(() => {
-                  setMatchId(doc.id)
+                  setMatch({
+                    ...updateMatch,
+                    id: doc.id
+                  })
                 })
             }
           })
         }
       })
-  })
+  }, [])
+
 
   return {
-    matchId
+    match
   }
 }
 
