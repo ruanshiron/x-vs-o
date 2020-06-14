@@ -10,7 +10,7 @@ export default function UserContextProvider({ children }) {
     auth.onAuthStateChanged(user => {
       setSignedUser(user)
     })
-  })
+  }, [])
 
   return (
     <UserContext.Provider value={{signedInUser, setSignedUser}}>

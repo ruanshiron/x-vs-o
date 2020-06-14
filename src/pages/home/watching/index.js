@@ -14,7 +14,7 @@ function Watching() {
           enterButton
         />
         <Divider dashed/>
-        <Board />
+        {/* <Board /> */}
       </Card>
     </div>
   )

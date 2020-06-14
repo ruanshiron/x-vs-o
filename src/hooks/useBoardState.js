@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { firestore } from '../firebase'
-import firebase from 'firebase'
 import { won } from '../util'
+import { UserContext } from '../contexts/UserContextProvider'
+import { Modal } from 'antd'
+import { useHistory } from 'react-router-dom'
 
 // TODO: Firebase here 
 
@@ -17,86 +19,83 @@ function init_board() {
   }
   return r
 }
-function useBoardState(matchId) {
 
+function useBoardState(match) {
+
+  const history = useHistory()
   const [board, setBoard] = useState(init_board())
-  const [mark, setMark] = useState(false)
-  const matchRef = firestore.collection("matches").doc(matchId)
-
-  const moveOnBoard = firebase.functions().httpsCallable('moveOnBoard')
-
-  // useEffect(() => {
-  //   setMark(m => !m)
-  // }, [board])
+  const { signedInUser } = useContext(UserContext)
+  const mark = match.users.indexOf(signedInUser.uid)
+  const [isYourTurn, setIsYourTurn] = useState(match.turn === mark)
+  const matchRef = firestore.collection("matches").doc(match.id)
 
   useEffect(() => {
-    // New Board update
-    // const moveTo = [Math.floor(Math.random() * 14), Math.floor(Math.random() * 14)]
-    // const moveTo = [6, 4]
-    // firestore.runTransaction((transaction) => {
-    //   return transaction.get(matchRef).then((match) => {
-    //     if (!match.exists) {
-    //       throw "Document does not exist!";
-    //     }
 
-    //     const matchData = match.data()
-    //     const mark = 1
+    firestore.collection("matches").doc(match.id)
+      .onSnapshot((doc) => {
+        const { board, turn, winner } = doc.data()
 
-    //     console.log(matchData)
-    //     let newBoard = matchData.board ? JSON.parse(matchData.board) : init_board()
+        if (board) setBoard(JSON.parse(board))
+        if (turn === mark) setIsYourTurn(true)
 
-    //     if (newBoard[moveTo[0]][moveTo[1]] != null) {
-    //       return Promise.reject("You can NOT move here!")
-    //     } else {
-    //       newBoard[moveTo[0]][moveTo[1]] = mark
+        if (winner !== -1) {
+          setIsYourTurn(false)
 
-    //       transaction.update(matchRef, { board: JSON.stringify(newBoard) })
+          const title = winner === mark ? 'Victory' : 'Defeat' 
 
-    //       if (won(newBoard, 5, moveTo)) {
-    //         return { status: 'over' }
-    //       } else {
-    //         return { status: 'not over' }
-    //       }
-    //     }
-    //   })
-    // }).then((r) => {
-    //   console.log(r.status)
-    // }).catch((err) => {
-    //   console.error(err)
-    // })
-
-    // firestore.collection("matches").doc(matchId)
-    //   .onSnapshot((doc) => {
-    //     console.log("Current data: ", doc.data())
-    //     // setBoard(doc.data().board)
-    //   })
-
-
-    // matchRef.onSnapshot({
-    //   // Listen for document metadata changes
-    //   includeMetadataChanges: true
-    // }, function (doc) {
-    //   let newBoard = doc.data().board ? JSON.parse(doc.data().board) : init_board()
-    //   setBoard(newBoard)
-    // })
-  })
+          Modal.confirm({
+            title: title,
+            cancelText: 'Stay',
+            okText: 'leave',
+            onOk: () => history.replace('/')
+          })
+        }
+      })
+  }, [])
 
   function move(x, y) {
-    // if (board[x][y] !== null)
-    //   return
-    // board[x][y] = mark
-    // setBoard(deepClone(board))
+    // Phải nói thật là éo dùng được nó truy vấn lâu vcl 
+    // moveOnBoard({ matchId, moveTo: [x, y] }).then(function (result) {
+    //   console.log(result)
+    // }).catch(function (error) {
+    //   console.error(error)
+    // })
+    // hết 
+    if (!isYourTurn)
+      return
 
-    moveOnBoard({ matchId, moveTo: [x, y] }).then(function (result) {
-      console.log(result)
-    }).catch(function (error) {
-      console.error(error)
+    if (board[x][y] !== null)
+      return
+    board[x][y] = mark
+
+    setBoard(deepClone(board))
+    setIsYourTurn(false)
+
+    if (won(board, 2, [x, y]))
+      UpdateBoardToFirebase(board, mark)
+    else
+      UpdateBoardToFirebase(board)
+
+  }
+
+  function UpdateBoardToFirebase(board, winner) {
+    // Update to Firestore
+    firestore.runTransaction((transaction) => {
+      return transaction.get(matchRef).then((match) => {
+        transaction.update(matchRef, { board: JSON.stringify(board), turn: 1 - mark, winner: winner !== undefined ? winner : -1 })
+        return `Successfully update ${['X', 'O'][mark]}`
+      })
+    }).then((r) => {
+      console.log(r)
+    }).catch((err) => {
+      console.error(err)
     })
   }
 
   return {
     board,
-    move
+    move,
+    mark
   }
 }
 

@@ -1,38 +1,35 @@
-import React, { useContext, useEffect } from 'react'
-import { Card, Divider } from 'antd'
+import React, { useEffect } from 'react'
+import { Card, Divider, Spin } from 'antd'
 import Board from './Board'
 import useGameState from '../hooks/useGameState'
-import ChatBox from './ChatBox'
 import TurnBar from './TurnBar'
-import { UserContext } from '../contexts/UserContextProvider'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const styleGameBoard = { maxWidth: 512, margin: 'auto' }
 
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
 function Game() {
-  const { signedInUser } = useContext(UserContext)
 
-  const { matchId } = useGameState(signedInUser)
+  const { match } = useGameState()
 
   useEffect(() => {
-    console.log(matchId)
-  }, [matchId])
+    console.log(match)
+  }, [match])
 
   return (
-    <>
-      <Card style={styleGameBoard} >
-        {
-          matchId &&
+    <Card style={styleGameBoard} >
+      {
+        match ?
           <>
             <TurnBar />
             <Divider dashed />
-            <Board matchId={matchId}/>
+            <Board match={match} />
           </>
-        }
-      </Card>
-
-      <ChatBox />
-    </>
+          :
+          <Spin style={{ margin: 'auto' }} indicator={antIcon} />
+      }
+    </Card>
   )
 }
 

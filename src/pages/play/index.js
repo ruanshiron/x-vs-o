@@ -6,6 +6,7 @@ import Game from '../../components/Game'
 import 'react-chat-widget/lib/styles.css'
 import Header from '../../components/Header'
 import { UserContext } from '../../contexts/UserContextProvider'
+import ChatBox from '../../components/ChatBox'
 
 
 function Play() {
@@ -14,6 +15,10 @@ function Play() {
   return (
     <Layout>
       <Header />
+
+      {/* <ChatBox 
+      
+      /> */}
 
       <Layout.Content style={{ marginTop: 64, background: '#fff' }}>
         <div className="site-layout-background" >
