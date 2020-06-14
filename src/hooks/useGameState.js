@@ -13,7 +13,8 @@ function useGameState() {
     users: [signedInUser.uid],
     state: 0,
     turn: 0,
-    winner: -1
+    winner: -1,
+    created: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   useEffect(() => {
