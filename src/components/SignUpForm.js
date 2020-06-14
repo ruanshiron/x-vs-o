@@ -40,16 +40,22 @@ function SignupForm(props) {
     try {
       const result = await auth.createUserWithEmailAndPassword(email, password)
       const newUser = {
-        wins: 0,
-        losses: 0,
-        points: 0, 
-        ranks: 0, 
+        stats: {
+          wins: 0,
+          losses: 0,
+          points: 0,
+          ranks: 0,
+          elo: 0
+        },
         blocked: false,
-        elo: 0
       }
 
       await result.user.updateProfile({ displayName: name })
-      await db.collection('users').doc(result.user.uid).set(newUser)
+      await db.collection('users').doc(result.user.uid).set({
+        ...newUser,
+        displayName: name,
+        email: result.user.email
+      })
         .then(function () {
           console.log("Document successfully written!");
         })

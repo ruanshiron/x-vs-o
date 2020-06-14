@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { List, Typography } from 'antd';
+import { useParams } from 'react-router-dom';
+import useStats from '../../../../hooks/useStats';
 
 const data = [
   {
@@ -28,7 +30,13 @@ const data = [
   // }
 ]
 
-function Stats(props) {
+function Stats() {
+
+  let { uid } = useParams()
+
+  const { data } = useStats(uid)
+
+
   return (
     <List
       itemLayout="horizontal"

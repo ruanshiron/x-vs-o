@@ -1,4 +1,4 @@
-import { provider, auth } from '../firebase'
+import { provider, auth, firestore } from '../firebase'
 
 export default function useAuth() {
 
@@ -18,7 +18,34 @@ export default function useAuth() {
   }
 
   const signInWithGoogle = () => {
-    return auth.signInWithPopup(provider)
+    return auth.signInWithPopup(provider).then(result => {
+      const userRef = firestore.collection('users').doc(result.user.uid)
+      return firestore.runTransaction(function (transaction) {
+        return transaction.get(userRef).then(function (userDoc) {
+          const stats = {
+            wins: 0,
+            losses: 0,
+            points: 0,
+            ranks: 0,
+            elo: 0
+          }
+          if (!userRef.exists) {
+            userRef.set({
+              displayName: result.user.displayName, 
+              email: result.user.email,
+              stats,
+              block: false
+            })
+            return 
+          }
+          const userData = userDoc.data()
+          if (userData.stats)
+            transaction.update(userRef, { displayName: result.user.displayName, email: result.user.email })
+          else
+            transaction.update(userRef, { displayName: result.user.displayName, email: result.user.email, stats, block: false })
+        });
+      })
+    })
   }
 
   return {

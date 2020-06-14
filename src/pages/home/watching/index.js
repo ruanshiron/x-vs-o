@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Input, Divider } from 'antd'
-import Board from '../../../components/Board'
 
 
 function Watching() {
@@ -14,7 +13,6 @@ function Watching() {
           enterButton
         />
         <Divider dashed/>
-        {/* <Board /> */}
       </Card>
     </div>
   )
