@@ -5,7 +5,6 @@ import LinkButton from '../../../../components/LinkButton'
 import useMatchHistory from '../../../../hooks/useMatchHistory'
 
 
-
 const columns = [
   {
     title: 'Win',
