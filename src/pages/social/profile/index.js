@@ -8,6 +8,7 @@ import useProfile from '../../../hooks/useProfile'
 import { firestore } from '../../../firebase'
 import ChangePasswordModal from '../../../components/ChangePasswordModal'
 import { UserContext } from '../../../contexts/UserContextProvider'
+import AvatarImage from '../../../components/AvatarImage'
 
 
 const tabList = [
@@ -70,7 +71,7 @@ function Profile(props) {
   }
 
   const showChangePasswordModal = () => {
-    console.log(signedInUser?.providerData[0]);
+    console.log(signedInUser);
     
     setVisible(true)
   }
@@ -80,8 +81,8 @@ function Profile(props) {
       <Card style={{ width: '100%', marginTop: 16 }} >
         <Row>
           <Col span={5}>
-            <Row gutter={[0, 40]}>
-              <img id='profile-avatar' src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' alt='avatar' />
+            <Row justify='center'>
+              <AvatarImage src={signedInUser?.photoURL}/>
             </Row>
             <Row>
               <Typography.Paragraph strong editable={{ onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>
