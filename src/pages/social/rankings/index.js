@@ -7,6 +7,7 @@ const data = [
 
 for (let index = 0; index < 100; index++) {
   data.push({
+    key: index+1,
     top: index+1,
     username: 'vinh' + index,
     losses: 102,

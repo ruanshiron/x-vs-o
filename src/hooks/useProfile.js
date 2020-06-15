@@ -9,7 +9,7 @@ export default function useProfile(uid) {
     return firestore.runTransaction(function (transaction) {
       return transaction.get(userRef).then(function (userDoc) {
         if (!userDoc.exists) {
-          throw 'User Document is now existed!'
+          throw new Error('User Document is now existed!')
         }
 
         transaction.update(userRef, { displayName: newDisplayName })
@@ -19,10 +19,6 @@ export default function useProfile(uid) {
     })
   }
 
-  const changePassword = (newPassword) => {
-    
-  }
- 
   useEffect(() => {
     firestore.collection('users').doc(uid).get()
       .then((doc) => {
