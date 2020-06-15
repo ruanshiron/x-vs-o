@@ -19,6 +19,8 @@
 #profile-avatar {
   position: relative;
   height: 138px;
+  width: 138px;
+  object-fit: cover;
   margin-bottom: 1em;
   border-radius: 50%;
 }

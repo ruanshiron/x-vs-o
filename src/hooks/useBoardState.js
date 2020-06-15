@@ -66,6 +66,8 @@ function useBoardState(match) {
 
       if (winner !== -1) {
         setGameover(true)
+        if (timer) clearTimeout(timer)
+        if (repeat) clearInterval(repeat)
 
         const promt = winner === mark ?
           { title: '勝利', message: '最高です！', icon: <SmileTwoTone /> }
@@ -91,6 +93,8 @@ function useBoardState(match) {
     if (repeat) clearInterval(repeat)
     setTimer(setTimeout(onTimeoutTurn, 15000))
     setRepeat(setInterval(() => setTimeOnBar(t => t - 1000), 1000))
+
+    // eslint-disable-next-line
   }, [isYourTurn])
 
   function move(x, y) {
