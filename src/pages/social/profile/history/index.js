@@ -39,11 +39,12 @@ function History({ defaultPage }) {
   let { uid } = useParams()
   let history = useHistory()
   let location = useLocation()
-  const { data } = useMatchHistory(uid)
+  const { data, isPending } = useMatchHistory(uid)
 
 
   return (
     <Table
+      loading={isPending}
       columns={columns}
       pagination={{
         onChange: page => {
