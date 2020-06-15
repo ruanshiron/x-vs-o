@@ -22,8 +22,8 @@ export default function useProfile(uid) {
   useEffect(() => {
     firestore.collection('users').doc(uid).get()
       .then((doc) => {
-        const { displayName, email } = doc.data()
-        setProfile({ displayName, email })
+        const { displayName, email, photoURL } = doc.data()
+        setProfile({ displayName, email, photoURL })
       })
   }, [uid])
 
