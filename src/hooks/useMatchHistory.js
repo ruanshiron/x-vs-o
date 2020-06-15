@@ -22,7 +22,7 @@ export default function useMatchHistory(uid) {
             created: created.toDate()
           })
         })
-        console.log(newData);
+        // console.log(newData);
         
         setData(newData)
       })

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Card, Typography, Table } from 'antd'
+import useRankings from '../../../hooks/useRankings';
+import { useHistory } from 'react-router-dom';
 
 const data = [
 
@@ -56,12 +58,15 @@ const columns = [
 ];
 
 function Rankings(props) {
+  const { topRank } = useRankings()
+  let history = useHistory()
+
   return (
     <div className="site-layout-background" >
       <Card style={{ width: '100%', marginTop: 16 }} >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={topRank}
           showHeader={true}
           pagination={{
             showSizeChanger: false,
@@ -69,7 +74,9 @@ function Rankings(props) {
           }}
           onRow={(record, rowIndex) => {
             return {
-              onClick: event => {}
+              onClick: event => {
+                history.push(`social/${record.uid}`)
+              }
             }
           }}
           scroll={{x: true}}

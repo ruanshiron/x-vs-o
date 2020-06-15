@@ -1,6 +1,7 @@
 export const UserModel = {
   email: '',
   displayName: '',
+  photoURL: null,
   points: 0,
   rank: 0,
   wins: 0,

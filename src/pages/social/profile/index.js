@@ -70,8 +70,6 @@ function Profile(props) {
   }
 
   const showChangePasswordModal = () => {
-    console.log(signedInUser);
-    
     setVisible(true)
   }
 
@@ -81,7 +79,7 @@ function Profile(props) {
         <Row>
           <Col span={5}>
             <Row justify='center'>
-              <AvatarImage src={signedInUser?.photoURL}/>
+              <AvatarImage src={profile.photoURL}/>
             </Row>
             <Row>
               <Typography.Paragraph strong editable={(signedInUser?.uid === uid) && { onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>

@@ -29,14 +29,15 @@ export default function useAuth() {
               ...UserModel, 
               displayName: result.user.displayName, 
               email: result.user.email,
+              photoURL: result.user.photoURL
             })
             return 
           }
           const userData = userDoc.data()
           if (userData.ranks !== undefined)
-            transaction.update(userRef, { displayName: result.user.displayName, email: result.user.email })
+            transaction.update(userRef, { displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL })
           else
-            transaction.update(userRef, { ...UserModel, displayName: result.user.displayName, email: result.user.email })
+            transaction.update(userRef, { ...UserModel, displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL })
         });
       })
     })
