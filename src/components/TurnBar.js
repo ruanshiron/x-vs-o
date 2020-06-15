@@ -9,7 +9,7 @@ function TurnBar(props) {
   return (
     <div style={{ justifyContent: 'space-between', display: 'flex' }}>
       <Typography.Text strong>{isYourTurn ? `『${mark === 1 ? 'Ｏ' : 'Ｘ'}：${signedInUser.displayName}』` : `　${mark === 1 ? 'Ｏ' : 'Ｘ'} : ${signedInUser.displayName}　`}</Typography.Text>
-      <Typography.Text strong>ｖｓ</Typography.Text>
+      {/* <Typography.Text strong>ｖｓ</Typography.Text> */}
       <Typography.Text strong>{!isYourTurn ? `『${!(mark === 1) ? 'Ｏ' : 'Ｘ'}』` : `　${!(mark === 1) ? 'Ｏ' : 'Ｘ'}　`}</Typography.Text>
     </div>
   )
