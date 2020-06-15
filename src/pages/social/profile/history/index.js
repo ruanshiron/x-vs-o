@@ -22,7 +22,7 @@ const columns = [
     title: 'Opponent',
     dataIndex: 'opponent',
     key: 'opponent',
-    render: (opponent) => <LinkButton type='link' to={`/social/${opponent}`} >{opponent}</LinkButton>
+    render: (opponent) => <LinkButton type='link' to={`/social/${opponent.uid}`} >{opponent.displayName? opponent.displayName: 'loading...'}</LinkButton>
   },
   {
     title: 'Created',
