@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {  Tag, Table } from 'antd'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import LinkButton from '../../../../components/LinkButton'
@@ -10,7 +10,7 @@ const columns = [
     title: 'Win',
     dataIndex: 'win',
     key: 'win',
-    render: (win) => <Tag color={win ? '#87d068' : '#f50'}>{win ? '勝ち' : '負け'}</Tag>,
+    render: (win) => <Tag color={win ? '#87d068' : '#f50'}>{win ? '勝ち' : '負け'}</Tag>
   },
   {
     title: 'Point',
@@ -30,6 +30,8 @@ const columns = [
     dataIndex: 'created',
     align: 'right',
     render: (created) => (created.toLocaleString('ja-JP')),
+    fixed: 'right',
+    width: 72
   }
 ];
 

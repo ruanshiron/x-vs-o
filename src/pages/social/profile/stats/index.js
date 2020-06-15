@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { List, Typography } from 'antd';
 import { useParams } from 'react-router-dom';
 import useStats from '../../../../hooks/useStats';

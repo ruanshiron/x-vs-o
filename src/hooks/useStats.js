@@ -7,35 +7,40 @@ export default function useStats(uid) {
   useEffect(() => {
     firestore.collection('users').doc(uid).get()
       .then((doc) => {
-        const { points, ranks, wins, losses } = doc.data().stats
+        const { points, rank, wins, losses, elo } = doc.data()
         setData([
           {
             title: 'ポイント',
-            value: points
+            value: points,
+            key: 'points'
           },
           {
             title: 'ランク',
-            value: ranks
+            value: rank,
+            key: 'rank'
           },
           {
-            title: '対戦',
-            value: wins + losses
+            title: '敗北',
+            value: losses,
+            key: 'losses'
           },
           {
             title: '勝ち',
-            value: wins
+            value: wins,
+            key: '勝ち'
           },
           // {
           //   title: '勝率',
           //   value: Math.floor(wins / (losses + wins) * 100)
           // },
-          // {
-          //   title: 'ELO',
-          //   value: 291
-          // }
+          {
+            title: 'ELO',
+            value: elo,
+            key: 'elo'
+          }
         ])
       })
-  }, [])
+  }, [uid])
 
   return {
     data

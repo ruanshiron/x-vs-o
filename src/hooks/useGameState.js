@@ -11,20 +11,20 @@ function useGameState() {
 
   const newMatch = {
     users: [signedInUser.uid],
-    state: 0,
+    ready: false,
     turn: 0,
     winner: -1,
     created: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   useEffect(() => {
-    matchRef.where('state', '==', 0).limit(1).get()
+    matchRef.where('ready', '==', false).limit(1).get()
       .then((snapshot) => {
         if (snapshot.size === 0) { // create new match and wait other player
           matchRef.add(newMatch)
             .then(r => {
               const unsubscribe = matchRef.doc(r.id).onSnapshot((doc) => {
-                if (doc.data().state === 1) {
+                if (doc.data().ready) {
 
                   setMatch({
                     ...doc.data(),
@@ -40,7 +40,7 @@ function useGameState() {
             const match = doc.data()
             if (match.users.includes(signedInUser.uid)) {
               const unsubscribe = matchRef.doc(doc.id).onSnapshot((xdoc) => {
-                if (xdoc.data().state === 1) {
+                if (xdoc.data().ready) {
                   setMatch({
                     ...xdoc.data(),
                     id: xdoc.id
@@ -53,7 +53,7 @@ function useGameState() {
               const updateMatch = {
                 ...newMatch,
                 users: [...match.users, signedInUser.uid],
-                state: 1
+                ready: true
               }
               matchRef.doc(doc.id).set(updateMatch)
                 .then(() => {

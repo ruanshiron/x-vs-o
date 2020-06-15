@@ -1,4 +1,5 @@
 import { provider, auth, firestore } from '../firebase'
+import { UserModel } from '../model'
 
 export default function useAuth() {
 
@@ -22,27 +23,20 @@ export default function useAuth() {
       const userRef = firestore.collection('users').doc(result.user.uid)
       return firestore.runTransaction(function (transaction) {
         return transaction.get(userRef).then(function (userDoc) {
-          const stats = {
-            wins: 0,
-            losses: 0,
-            points: 0,
-            ranks: 0,
-            elo: 0
-          }
+
           if (!userRef.exists) {
             userRef.set({
+              ...UserModel, 
               displayName: result.user.displayName, 
               email: result.user.email,
-              stats,
-              block: false
             })
             return 
           }
           const userData = userDoc.data()
-          if (userData.stats)
+          if (userData.ranks !== undefined)
             transaction.update(userRef, { displayName: result.user.displayName, email: result.user.email })
           else
-            transaction.update(userRef, { displayName: result.user.displayName, email: result.user.email, stats, block: false })
+            transaction.update(userRef, { ...UserModel, displayName: result.user.displayName, email: result.user.email })
         });
       })
     })
