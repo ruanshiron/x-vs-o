@@ -3,6 +3,7 @@ import { Layout, Card, Tag, Table, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import DemoControl from '../../components/DemoControl'
 
 const contentStyle = { marginTop: 64, background: '#fff' }
 
@@ -76,6 +77,7 @@ function Dashboard() {
       <Header />
       <Layout.Content style={contentStyle}>
         <div className="site-layout-background" >
+          <DemoControl />
           <Card style={{ width: '100%', marginTop: 16 }} >
             <Table
               columns={columns}

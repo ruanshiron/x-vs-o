@@ -9,7 +9,6 @@ function Stats() {
 
   const { data } = useStats(uid)
 
-
   return (
     <List
       itemLayout="horizontal"
