@@ -8,6 +8,7 @@ import useProfile from '../../../hooks/useProfile'
 import ChangePasswordModal from '../../../components/ChangePasswordModal'
 import { UserContext } from '../../../contexts/UserContextProvider'
 import AvatarImage from '../../../components/AvatarImage'
+import AvatarChangeButton from '../../../components/AvatarChangeButton'
 
 
 const tabList = [
@@ -79,7 +80,7 @@ function Profile(props) {
         <Row>
           <Col span={5}>
             <Row justify='center'>
-              <AvatarImage src={profile.photoURL}/>
+              <AvatarImage src={(signedInUser?.uid === uid) ? signedInUser.photoURL : profile.photoURL} />
             </Row>
             <Row>
               <Typography.Paragraph strong editable={(signedInUser?.uid === uid) && { onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>
@@ -87,14 +88,16 @@ function Profile(props) {
             <Row>
               <Typography.Paragraph strong >{profile.email}</Typography.Paragraph>
             </Row>
-
             {
               passwordIsChangeable &&
-              <Row>
-                <Button type='link' onClick={() => showChangePasswordModal()}>パスワードを変更</Button>
-              </Row>
+              <>
+                <Divider />
+                <Row>
+                  <AvatarChangeButton user={signedInUser} />
+                  <Button type='dashed' block onClick={() => showChangePasswordModal()}>パスワードを変更</Button>
+                </Row>
+              </>
             }
-
             <Divider />
             <Row>
               <LogoutButton />
