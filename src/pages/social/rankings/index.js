@@ -1,22 +1,8 @@
 import React from 'react'
 import { Card, Typography, Table } from 'antd'
 import useRankings from '../../../hooks/useRankings';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const data = [
-
-];
-
-for (let index = 0; index < 100; index++) {
-  data.push({
-    key: index+1,
-    top: index+1,
-    username: 'vinh' + index,
-    losses: 102,
-    wins: 143 + 1 * index,
-    point: 2013 + index * 10
-  })
-}
 const columns = [
   {
     title: '',
@@ -30,7 +16,7 @@ const columns = [
     title: '',
     dataIndex: 'username',
     key: 'username',
-    render: (username, record) => <Typography.Title  level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{username}</Typography.Title>,
+    render: (username, record) => <Link to={`/social/${record.uid}`}><Typography.Title type='secondary' level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{username}</Typography.Title></Link>,
     ellipsis: true,
     width: 128
   },
@@ -58,13 +44,13 @@ const columns = [
 ];
 
 function Rankings(props) {
-  const { topRank } = useRankings()
-  let history = useHistory()
+  const { topRank, isPending } = useRankings()
 
   return (
     <div className="site-layout-background" >
       <Card style={{ width: '100%', marginTop: 16 }} >
         <Table
+          loading={isPending}
           columns={columns}
           dataSource={topRank}
           showHeader={true}
@@ -74,9 +60,7 @@ function Rankings(props) {
           }}
           onRow={(record, rowIndex) => {
             return {
-              onClick: event => {
-                history.push(`social/${record.uid}`)
-              }
+              onClick: event => { }
             }
           }}
           scroll={{x: true}}
