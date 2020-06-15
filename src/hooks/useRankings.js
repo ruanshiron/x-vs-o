@@ -35,8 +35,6 @@ export default function useRankings() {
         })
 
         setTopRank(newData)
-        console.log(newData);
-
       })
 
   }, [])
