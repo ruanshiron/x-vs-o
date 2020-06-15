@@ -3,6 +3,7 @@ import { Form, Input, Card, Button, Tooltip, Typography, message } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
+import { UserModel } from '../model'
 
 const formItemLayout = {
   labelAlign: 'left',
@@ -39,16 +40,7 @@ function SignupForm(props) {
     let { name, email, password } = values
     try {
       const result = await auth.createUserWithEmailAndPassword(email, password)
-      const newUser = {
-        stats: {
-          wins: 0,
-          losses: 0,
-          points: 0,
-          ranks: 0,
-          elo: 0
-        },
-        blocked: false,
-      }
+      const newUser = UserModel
 
       await result.user.updateProfile({ displayName: name })
       await db.collection('users').doc(result.user.uid).set({

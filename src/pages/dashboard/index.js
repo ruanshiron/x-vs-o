@@ -81,7 +81,7 @@ function Dashboard() {
               columns={columns}
               pagination={{ position: ['topLeft', 'bottomRight'] }}
               dataSource={data}
-
+              rowKey={(record) => record.email}
               scroll={{ x: true }}
             />
           </Card>

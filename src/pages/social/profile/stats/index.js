@@ -1,34 +1,7 @@
-import React, { useEffect } from 'react'
-import { List, Typography } from 'antd';
-import { useParams } from 'react-router-dom';
-import useStats from '../../../../hooks/useStats';
-
-const data = [
-  {
-    title: 'ポイント',
-    value: 1201
-  },
-  {
-    title: 'ランク',
-    value: 102
-  },
-  {
-    title: '対戦',
-    value: 102
-  },
-  {
-    title: '勝ち',
-    value: 54
-  },
-  {
-    title: '勝率',
-    value: Math.floor(54/102*100)
-  },
-  // {
-  //   title: 'ELO',
-  //   value: 291
-  // }
-]
+import React from 'react'
+import { List, Typography } from 'antd'
+import { useParams } from 'react-router-dom'
+import useStats from '../../../../hooks/useStats'
 
 function Stats() {
 

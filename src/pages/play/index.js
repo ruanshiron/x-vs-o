@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Layout, Button, Modal } from 'antd'
+import { Layout } from 'antd'
 import Footer from '../../components/Footer'
 import Game from '../../components/Game'
 

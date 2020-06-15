@@ -15,13 +15,14 @@ export default function useMatchHistory(uid) {
 
 
           newData.push({
+            key: doc.id,
             win: winner === users.indexOf(uid),
             point: '?',
             opponent: users[1 - users.indexOf(uid)],
             created: created.toDate()
           })
         })
-        console.log(newData);
+        // console.log(newData);
         
         setData(newData)
       })

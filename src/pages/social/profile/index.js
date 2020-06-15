@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Card, Row, Col, Typography, Divider, Button, Modal } from 'antd'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Card, Row, Col, Typography, Divider, Button } from 'antd'
+import { useLocation, useParams } from 'react-router-dom'
 import History from './history'
 import Stats from './stats'
 import LogoutButton from '../../../components/LogoutButton'
 import useProfile from '../../../hooks/useProfile'
-import { firestore } from '../../../firebase'
 import ChangePasswordModal from '../../../components/ChangePasswordModal'
 import { UserContext } from '../../../contexts/UserContextProvider'
 import AvatarImage from '../../../components/AvatarImage'
@@ -71,8 +70,6 @@ function Profile(props) {
   }
 
   const showChangePasswordModal = () => {
-    console.log(signedInUser);
-    
     setVisible(true)
   }
 
@@ -82,10 +79,10 @@ function Profile(props) {
         <Row>
           <Col span={5}>
             <Row justify='center'>
-              <AvatarImage src={signedInUser?.photoURL}/>
+              <AvatarImage src={profile.photoURL}/>
             </Row>
             <Row>
-              <Typography.Paragraph strong editable={{ onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>
+              <Typography.Paragraph strong editable={(signedInUser?.uid === uid) && { onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>
             </Row>
             <Row>
               <Typography.Paragraph strong >{profile.email}</Typography.Paragraph>
