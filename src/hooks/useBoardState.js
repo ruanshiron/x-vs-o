@@ -29,7 +29,33 @@ function useBoardState(match) {
   const mark = match.users.indexOf(signedInUser.uid)
   const [isYourTurn, setIsYourTurn] = useState(match.turn === mark)
   const matchRef = firestore.collection("matches").doc(match.id)
+  const [gameover, setGameover] = useState(false)
+  const onTimeoutTurn = () => {
+    let winner = -1
+    if (isYourTurn)
+      winner = mark
+    else
+      winner = 1 - mark
 
+    setGameover(true)
+
+    firestore.runTransaction((transaction) => {
+      return transaction.get(matchRef).then((match) => {
+        const matchData = match.data()
+        if (matchData.winner === -1)
+          transaction.update(matchRef, { winner: winner })
+
+        return `We have winner!`
+      })
+    }).then((r) => {
+      console.log(r)
+    }).catch((err) => {
+      console.error(err)
+    })
+  }
+  const [timeOnBar, setTimeOnBar] = useState(15000)
+  const [timer, setTimer] = useState()
+  const [repeat, setRepeat] = useState()
   useEffect(() => {
 
     matchRef.onSnapshot((doc) => {
@@ -39,7 +65,7 @@ function useBoardState(match) {
       if (turn === mark) setIsYourTurn(true)
 
       if (winner !== -1) {
-        setIsYourTurn(false)
+        setGameover(true)
 
         const promt = winner === mark ?
           { title: '勝利', message: '最高です！', icon: <SmileTwoTone /> }
@@ -59,6 +85,14 @@ function useBoardState(match) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    setTimeOnBar(15000)
+    if (timer) clearTimeout(timer)
+    if (repeat) clearInterval(repeat)
+    setTimer(setTimeout(onTimeoutTurn, 15000))
+    setRepeat(setInterval(() => setTimeOnBar(t => t - 1000), 1000))
+  }, [isYourTurn])
+
   function move(x, y) {
     // Phải nói thật là éo dùng được nó truy vấn lâu vcl 
     // moveOnBoard({ matchId, moveTo: [x, y] }).then(function (result) {
@@ -67,6 +101,9 @@ function useBoardState(match) {
     //   console.error(error)
     // })
     // hết 
+    if (gameover)
+      return
+
     if (!isYourTurn)
       return
 
@@ -102,7 +139,8 @@ function useBoardState(match) {
     board,
     move,
     mark,
-    isYourTurn
+    isYourTurn,
+    timeOnBar
   }
 }
 
