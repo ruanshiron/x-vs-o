@@ -3,6 +3,7 @@ import { firestore } from '../firebase';
 
 export default function useMatchHistory(uid) {
   const [data, setData] = useState([])
+  const [isPending, setIsPending] = useState(true)
 
   useEffect(() => {
     firestore.collection('matches').where('users', 'array-contains', uid)
@@ -25,8 +26,9 @@ export default function useMatchHistory(uid) {
         // console.log(newData);
 
         setData(newData)
+        setIsPending(false)
 
-        newData.map((u, i) => {
+        newData.forEach((u, i) => {
           firestore.collection('users').doc(u.opponent.uid).get()
             .then((result) => {
               newData[i].opponent = {uid: u.opponent.uid, displayName: result.data().displayName}
@@ -43,6 +45,7 @@ export default function useMatchHistory(uid) {
   }, [data])
 
   return {
-    data
+    data,
+    isPending
   }
 }
