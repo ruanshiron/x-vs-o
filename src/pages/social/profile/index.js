@@ -99,9 +99,12 @@ function Profile(props) {
               </>
             }
             <Divider />
-            <Row>
-              <LogoutButton />
-            </Row>
+            {
+              signedInUser?.uid === uid &&
+              <Row>
+                <LogoutButton />
+              </Row>
+            }
           </Col>
           <Col span={18} offset={1}>
             <Card
