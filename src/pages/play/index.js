@@ -21,7 +21,7 @@ function Play() {
         </div>
       </Layout.Content>
 
-      <Footer />
+      {/* <Footer /> */}
 
     </Layout>
   )
