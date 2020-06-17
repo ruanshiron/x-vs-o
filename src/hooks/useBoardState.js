@@ -31,11 +31,7 @@ function useBoardState(match) {
   const matchRef = firestore.collection("matches").doc(match.id)
   const [gameover, setGameover] = useState(false)
   const onTimeoutTurn = () => {
-    let winner = -1
-    if (isYourTurn)
-      winner = mark
-    else
-      winner = 1 - mark
+    let winner = isYourTurn? 1 - mark: mark
 
     setGameover(true)
 
@@ -118,7 +114,7 @@ function useBoardState(match) {
     setBoard(deepClone(board))
     setIsYourTurn(false)
 
-    if (won(board, 2, [x, y]))
+    if (won(board, 5, [x, y]))
       UpdateBoardToFirebase(board, mark)
     else
       UpdateBoardToFirebase(board)

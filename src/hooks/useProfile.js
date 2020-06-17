@@ -3,6 +3,7 @@ import { firestore, auth } from '../firebase';
 
 export default function useProfile(uid) {
   const [profile, setProfile] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const changeDisplayName = (newDisplayName) => {
     const userRef = firestore.collection('users').doc(uid)
@@ -24,11 +25,13 @@ export default function useProfile(uid) {
       .then((doc) => {
         const { displayName, email, photoURL } = doc.data()
         setProfile({ displayName, email, photoURL })
+        setIsLoading(false)
       })
   }, [uid])
 
   return {
     profile,
-    changeDisplayName
+    changeDisplayName,
+    isLoading
   }
 }

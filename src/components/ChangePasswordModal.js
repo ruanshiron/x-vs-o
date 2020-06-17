@@ -4,7 +4,7 @@ import { auth } from '../firebase'
 import firebase from 'firebase'
 
 export default function ChangePasswordModal(props) {
-  const { visible, handleCancel } = props
+  const { visible, setVisible, handleCancel } = props
   const [form] = Form.useForm()
   const onFinish = (value) => {
     var credential = firebase.auth.EmailAuthProvider.credential(
@@ -15,6 +15,7 @@ export default function ChangePasswordModal(props) {
       .then(() => {
         auth.currentUser.updatePassword(value.password)
           .then(() => {
+            setVisible(false)
             message.success('Change Password successfully!')
           })
           .catch((error) => {
