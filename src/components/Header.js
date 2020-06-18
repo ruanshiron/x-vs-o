@@ -13,7 +13,9 @@ const headerStyle = {
   background: '#fff',
   borderStyle: 'none none solid none',
   borderWidth: '0.5px',
-  borderColor: '#F0F0F0'
+  borderColor: '#F0F0F0',
+  paddingLeft: 24,
+  paddingRight: 24
 }
 
 function DashboardButton({ match }) {
@@ -67,25 +69,25 @@ function Header() {
       <Row justify="space-between">
         {
           matchHome &&
-          <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+          <Col>
             <LinkButton type='primary' size='large' to='play'>ニューゲーム</LinkButton>
           </Col>
         }
 
-        <Col xs={0} sm={0} md={4} lg={4} xl={4}>
+        <Col>
           <Logo />
         </Col>
 
         {
           !(matchHome || matchPlay) &&
-          <Col xs={12} sm={8} md={4} lg={4} xl={4}>
+          <Col>
             <Input placeholder='ユーザーを検索'></Input>
           </Col>
         }
 
         {
           !matchPlay &&
-          <Col xs={4} sm={8} md={4} lg={4} xl={4}>
+          <Col>
             <Row justify="end">
               <Space>
                 <AuthStateButton />
@@ -97,7 +99,7 @@ function Header() {
         }
 
       </Row>
-    </Layout.Header>
+    </Layout.Header >
   )
 }
 

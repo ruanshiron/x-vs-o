@@ -76,49 +76,54 @@ function Profile(props) {
 
   return (
     <div className="site-layout-background" >
-      <Card style={{ width: '100%', marginTop: 16 }} >
-        <Row>
-          <Col span={5}>
+      <Row gutter={[16, 32]}>
+        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+          <Card style={{ width: '100%'}} >
             <Row justify='center'>
               <AvatarImage src={(signedInUser?.uid === uid) ? signedInUser.photoURL : profile.photoURL} />
             </Row>
-            <Row>
+            <Row justify='center'>
               <Typography.Paragraph strong editable={(signedInUser?.uid === uid) && { onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>
             </Row>
-            <Row>
+            <Row justify='center'>
               <Typography.Paragraph strong >{profile.email}</Typography.Paragraph>
             </Row>
             {
               passwordIsChangeable &&
               <>
-                <Divider />
                 <Row>
                   <AvatarChangeButton user={signedInUser} />
                   <Button type='dashed' block onClick={() => showChangePasswordModal()}>パスワードを変更</Button>
                 </Row>
               </>
             }
-            <Divider />
-            <Row>
-              <LogoutButton />
-            </Row>
-          </Col>
-          <Col span={18} offset={1}>
-            <Card
-              style={{ width: '100%', height: '100%' }}
-              tabList={tabList}
-              activeTabKey={key}
-              onTabChange={key => {
-                setKey(key)
-              }}
-            >
-              {contentList(key)({ defaultPage: historyDefaultPage })}
-            </Card>
-          </Col>
-        </Row>
-      </Card>
+            
+            {
+              signedInUser?.uid === uid &&
+              <Row>
+                <Divider />
+                <LogoutButton />
+              </Row>
+            }
 
-      <ChangePasswordModal visible={visible} handleCancel={() => setVisible(false)} />
+          </Card>
+        </Col>
+
+        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+          <Card
+            style={{ width: '100%', height: '100%' }}
+            tabList={tabList}
+            activeTabKey={key}
+            onTabChange={key => {
+              setKey(key)
+            }}
+          >
+            {contentList(key)({ defaultPage: historyDefaultPage })}
+          </Card>
+        </Col>
+      </Row>
+
+      <ChangePasswordModal setVisible={setVisible} visible={visible} handleCancel={() => setVisible(false)} />
     </div>
   )
 }
