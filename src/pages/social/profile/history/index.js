@@ -51,7 +51,7 @@ function History({ defaultPage }) {
           console.log(page)
           history.push(location.pathname + '?p=' + page)
         },
-        showQuickJumper: true,
+        showQuickJumper: false,
         defaultCurrent: defaultPage,
         showSizeChanger: true,
         responsive: true

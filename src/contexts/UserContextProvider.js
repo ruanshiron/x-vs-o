@@ -14,6 +14,18 @@ export default function UserContextProvider({ children }) {
         resolve(user)
       }, reject)
     })
+      .then(user => {
+        setSignedUser(user)
+        return user
+      }).catch(error => {
+        message.error(error)
+      })
+  }
+
+  const onAuthStateChanged = () => {
+    return auth.onAuthStateChanged(user => {
+      setSignedUser(user)
+    })
   }
 
   const Loading = () => {
@@ -26,12 +38,7 @@ export default function UserContextProvider({ children }) {
 
   useEffect(() => {
     getCurrentUser()
-      .then(user => {
-        setSignedUser(user)
-      })
-      .catch(error => {
-        message.error(error)
-      })
+    onAuthStateChanged()
   }, [])
 
   return (
