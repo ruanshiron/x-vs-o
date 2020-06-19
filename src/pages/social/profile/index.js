@@ -86,7 +86,7 @@ function Profile(props) {
               <Typography.Paragraph strong editable={(signedInUser?.uid === uid) && { onChange: (value) => { onFinishedChangeDisplayName(value) } }}>{profile.displayName}</Typography.Paragraph>
             </Row>
             <Row justify='center'>
-              <Typography.Paragraph strong >{profile.email}</Typography.Paragraph>
+              <Typography.Paragraph >{profile.email}</Typography.Paragraph>
             </Row>
             {
               passwordIsChangeable &&

@@ -54,10 +54,7 @@ function Rankings(props) {
           columns={columns}
           dataSource={topRank}
           showHeader={true}
-          pagination={{
-            showSizeChanger: false,
-            pageSize: 100,
-          }}
+          pagination={false} 
           onRow={(record, rowIndex) => {
             return {
               onClick: event => { }
