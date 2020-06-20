@@ -1,10 +1,18 @@
 const functions = require('firebase-functions')
-
 const admin = require('firebase-admin')
+const algoliasearch = require('algoliasearch')
 admin.initializeApp()
 
 const db = admin.firestore()
 const auth = admin.auth()
+
+const ALGOLIA_INDEX_NAME = 'Users_dev'
+const ALGOLIA_ID = functions.config().algolia.appid;
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.apikey
+const ALGOLIA_SEARCH_KEY = functions.config().algolia.searchkey
+
+const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY)
+
 
 
 // // Create and Deploy Your First Cloud Functions
@@ -28,6 +36,16 @@ const K_init = (elo) => {
   if (elo >= 2400) return 10
 }
 
+exports.onUserCreated = functions.firestore
+  .document('users/{userId}')
+  .onCreate((snap, context) => {
+    const user = snap.data();
+
+    user.objectID = context.params.userId;
+
+    const index = client.initIndex(ALGOLIA_INDEX_NAME);
+    return index.saveObject(user);
+  })
 
 exports.onDeleteUser = functions.auth
   .user()
@@ -96,7 +114,7 @@ exports.deleteAllUsers = functions.https.onCall(async (data, context) => {
   const usersUID = []
   usersList.users.forEach(u => usersUID.push(u.uid))
   console.log(usersUID);
-  
+
 
   // admin.auth().deleteUsers(usersUID)
   //   .then(function (deleteUsersResult) {

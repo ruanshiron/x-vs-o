@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
-import { Layout, Input, Col, Row, Space, Tooltip } from 'antd'
+import { Layout, Col, Row, Space, Tooltip } from 'antd'
 import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons'
 import logo from '../logo.svg'
 import LinkButton from './LinkButton'
 import { useRouteMatch } from 'react-router-dom'
 import AuthStateButton from './AuthStateButton'
 import { UserContext } from '../contexts/UserContextProvider'
+import SearchInput from './SearchInput'
 
 const headerStyle = {
   position: 'fixed',
@@ -82,7 +83,7 @@ function Header() {
         {
           !(matchHome || matchPlay) &&
           <Col>
-            <Input placeholder='ユーザーを検索'></Input>
+            <SearchInput />
           </Col>
         }
 

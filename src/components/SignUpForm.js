@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Form, Input, Card, Button, Tooltip, Typography, message } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import { UserModel } from '../model'
+import { UserContext } from '../contexts/UserContextProvider'
 
 const formItemLayout = {
   labelAlign: 'left',
@@ -35,6 +36,7 @@ function SignupForm(props) {
   let history = useHistory()
   const auth = firebase.auth()
   const db = firebase.firestore()
+  const { setSignedUser } = useContext(UserContext)
 
   const onFinish = async values => {
     let { name, email, password } = values
@@ -49,13 +51,19 @@ function SignupForm(props) {
         email: result.user.email
       })
         .then(function () {
-          console.log("Document successfully written!");
+          console.log("Document successfully written!")
+          setSignedUser(u => ({
+            uid: result.user.uid, 
+            ...newUser,
+            displayName: name,
+            email: result.user.email,
+            ...u
+          }))
+          history.replace('/')
         })
         .catch(function (error) {
           console.error("Error writing document: ", error);
         });
-
-      history.replace('/')
     } catch (error) {
       message.error(error.message)
     }

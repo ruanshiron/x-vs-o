@@ -23,14 +23,14 @@ export default function UserContextProvider({ children }) {
         }
       }).catch(error => {
         message.error(error)
+        auth.signOut()
       })
   }
 
   const onAuthStateChanged = () => {
-    return auth.onAuthStateChanged(async user => {
+    return auth.onAuthStateChanged(user => {
       if (user !== null && user !== undefined) {
-        const userData = await getUserDocument(user.uid)
-        setSignedUser({ ...user, ...userData })
+        setSignedUser(u => ({ ...u, ...user }))
       } else {
         setSignedUser(user)
       }

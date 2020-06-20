@@ -30,7 +30,7 @@ const columns = [
     key: 'displayName',
     render: (text, record) => <Link to={`/social/${record.uid}`}>{text}</Link>,
     fixed: 'left',
-    sorter: (a, b) => a.displayName.localeCompare(b.displayName),
+    sorter: (a, b) => a.displayName?.localeCompare(b.displayName),
     sortDirections: ['descend', 'ascend'],
   },
   {
