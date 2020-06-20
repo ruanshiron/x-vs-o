@@ -1,4 +1,5 @@
-import firebase from 'firebase/app'
+import firebaseApp from 'firebase/app'
+import firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
@@ -14,9 +15,21 @@ export const firebaseConfig = {
   measurementId: "G-D01685HRGR"
 }
 
-firebase.initializeApp(firebaseConfig)
+firebaseApp.initializeApp(firebaseConfig)
 
-export const provider = new firebase.auth.GoogleAuthProvider()
-export const auth = firebase.auth()
-export const firestore = firebase.firestore()
-export const storage = firebase.storage()
+const provider = new firebaseApp.auth.GoogleAuthProvider()
+const auth = firebaseApp.auth()
+const firestore = firebaseApp.firestore()
+const storage = firebaseApp.storage()
+const functions = firebase.functions()
+
+if (window.location.hostname === "localhost") {
+  firestore.settings({
+    host: "localhost:8000",
+    ssl: false
+  })
+
+  functions.useFunctionsEmulator('http://localhost:5001')
+}
+
+export { firestore, provider, auth, storage, functions }
