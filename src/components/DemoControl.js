@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Card, Button, Space } from 'antd'
 import { firestore, functions } from '../firebase'
+import { UserModel } from '../model'
 
 function initExampleUser(n) {
   let r = []
@@ -13,15 +14,14 @@ function initExampleUser(n) {
 
     const points = lnp - lns > 0 ? lnp - lns : 0
     r.push({
+      ...UserModel,
       email: `user${index}@example.com`,
       displayName: displayName,
-      photoURL: null,
       points: points,
       rank: 0,
       wins: lns,
       losses: lnp,
-      elo: 0,
-      blocked: false
+      matches: lns+lnp,
     })
   }
 
