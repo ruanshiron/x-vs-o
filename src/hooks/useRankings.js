@@ -17,9 +17,9 @@ export default function useRankings() {
             top: userData.rank,
             uid: doc.id,
             username: userData.displayName,
-            losses: userData.losses,
+            matches: userData.matches,
             wins: userData.wins,
-            point: userData.points
+            elo: userData.elo
           })
         })
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { auth } from '../firebase'
-import { message, Spin, Row, Col } from 'antd'
+import { message, Spin, Row } from 'antd'
 
 export const UserContext = React.createContext(false)
 

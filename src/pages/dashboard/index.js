@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import DemoControl from '../../components/DemoControl'
+import useDashboard from '../../hooks/useDashboard'
 
 const contentStyle = { marginTop: 64, background: '#fff' }
 
@@ -25,20 +26,24 @@ for (let index = 0; index < 200; index++) {
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'displayName',
+    key: 'displayName',
     render: (text) => <Link>{text}</Link>,
-    fixed: 'left'
+    fixed: 'left',
+    sorter: (a, b) => a.displayName.localeCompare(b.displayName),
+    sortDirections: ['descend', 'ascend'],
   },
   {
-    title: 'Top',
-    dataIndex: 'top',
-    key: 'top',
-    render: (top) => (
+    title: 'Rank',
+    dataIndex: 'rank',
+    key: 'rank',
+    render: (rank) => (
       <Tag>
-        {top}
+        {rank}
       </Tag>
-    )
+    ),
+    sorter: (a, b) => a.rank - b.rank,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Email',
@@ -51,27 +56,29 @@ const columns = [
     dataIndex: 'wins'
   },
   {
-    title: 'Losses',
-    key: 'losses',
-    dataIndex: 'losses'
+    title: 'Matches',
+    key: 'matches',
+    dataIndex: 'matches'
   },
   {
-    title: 'Point',
-    key: 'point',
-    dataIndex: 'point'
+    title: 'ELO',
+    key: 'elo',
+    dataIndex: 'elo'
   },
   {
     title: 'Action',
     key: 'action',
     render: (text, record) => (
       <span>
-        <Button type='link'>Block</Button>
+        <Button type='link' onClick={() => record.handleBlock(!record.blocked)}>{record.blocked ? 'Unblock' : 'Block'}</Button>
       </span>
     ),
+    width: 128
   },
 ];
 
 function Dashboard() {
+  const { isPending, users } = useDashboard()
   return (
     <Layout>
       <Header />
@@ -80,9 +87,10 @@ function Dashboard() {
           <DemoControl />
           <Card style={{ width: '100%', marginTop: 16 }} >
             <Table
+              loading={isPending}
               columns={columns}
               pagination={{ position: ['topLeft', 'bottomRight'] }}
-              dataSource={data}
+              dataSource={users}
               rowKey={(record) => record.email}
               scroll={{ x: true }}
             />

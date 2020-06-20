@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Typography, Table } from 'antd'
-import useRankings from '../../../hooks/useRankings';
-import { Link } from 'react-router-dom';
+import useRankings from '../../../hooks/useRankings'
+import { Link } from 'react-router-dom'
 
 const columns = [
   {
@@ -20,26 +20,26 @@ const columns = [
     ellipsis: true,
     width: 128
   },
-  {
-    title: 'ポイント',
-    key: 'point',
-    dataIndex: 'point',
-    align: 'right',
-    render: (point, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{point}</Typography.Title>
-  },
-  {
-    title: '負け',
-    dataIndex: 'losses',
-    key: 'losses',
-    align: 'right',
-    render: (losses, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{losses}</Typography.Title>
-  },
+  // {
+  //   title: 'ポイント',
+  //   key: 'point',
+  //   dataIndex: 'point',
+  //   align: 'right',
+  //   render: (point, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{point}</Typography.Title>
+  // },
   {
     title: '勝ち',
     dataIndex: 'wins',
     key: 'wins',
     align: 'right',
     render: (wins, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{wins}</Typography.Title>
+  },
+  {
+    title: '対戦',
+    dataIndex: 'matches',
+    key: 'matches',
+    align: 'right',
+    render: (matches, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{matches}</Typography.Title>
   }
 ];
 

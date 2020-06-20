@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Card, Button, Space } from 'antd'
-import { firestore } from '../firebase'
+import { firestore, functions } from '../firebase'
 
 function initExampleUser(n) {
   let r = []
@@ -54,6 +54,7 @@ function range(start, stop, step) {
 export default function DemoControl() {
   const [createPending, setCreatePending] = useState(false)
   const [deletePending, setDeletePending] = useState(false)
+  const [rankingPending, setRankingPending] = useState(false)
 
   const createUsers = () => {
     setCreatePending(true)
@@ -79,11 +80,21 @@ export default function DemoControl() {
       })
   }
 
+  const rankingUsers = () => {
+    setRankingPending(true)
+    var orderRanks = functions.httpsCallable('orderRanks');
+    orderRanks().then(function (result) {
+      console.log(result)
+      setRankingPending(false)
+    });
+  }
+
   return (
     <Card style={{ width: '100%' }}>
       <Space>
         <Button loading={createPending} type='primary' onClick={createUsers} >Create 100 example user</Button>
         <Button loading={deletePending} type='primary' onClick={deleteUsers} danger>Deleta all example user</Button>
+        <Button loading={rankingPending} type='primary' onClick={rankingUsers} >Ranking all Users</Button>
       </Space>
     </Card>
   )
