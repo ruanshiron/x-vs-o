@@ -4,6 +4,7 @@ const admin = require('firebase-admin')
 admin.initializeApp()
 
 const db = admin.firestore()
+const auth = admin.auth()
 
 
 // // Create and Deploy Your First Cloud Functions
@@ -88,4 +89,25 @@ exports.orderRanks = functions.https.onCall((data, context) => {
         return true
       })
   })
+})
+
+exports.deleteAllUsers = functions.https.onCall(async (data, context) => {
+  const usersList = await auth.listUsers()
+  const usersUID = []
+  usersList.users.forEach(u => usersUID.push(u.uid))
+  console.log(usersUID);
+  
+
+  // admin.auth().deleteUsers(usersUID)
+  //   .then(function (deleteUsersResult) {
+  //     console.log('Successfully deleted ' + deleteUsersResult.successCount + ' users');
+  //     console.log('Failed to delete ' + deleteUsersResult.failureCount + ' users');
+  //     deleteUsersResult.errors.forEach(function (err) {
+  //       console.log(err.error.toJSON());
+  //     });
+  //     return
+  //   })
+  //   .catch(function (error) {
+  //     console.log('Error deleting users:', error);
+  //   });
 })

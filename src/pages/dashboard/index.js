@@ -28,7 +28,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'displayName',
     key: 'displayName',
-    render: (text) => <Link>{text}</Link>,
+    render: (text, record) => <Link to={`/social/${record.uid}`}>{text}</Link>,
     fixed: 'left',
     sorter: (a, b) => a.displayName.localeCompare(b.displayName),
     sortDirections: ['descend', 'ascend'],

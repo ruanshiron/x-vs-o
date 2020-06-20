@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContextProvider'
 import { Result, Button, message } from 'antd'
 import LinkButton from './LinkButton'

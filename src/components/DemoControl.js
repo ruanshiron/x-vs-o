@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Button, Space } from 'antd'
+import { Card, Button, Space, message } from 'antd'
 import { firestore, functions } from '../firebase'
 import { UserModel } from '../model'
 
@@ -21,7 +21,7 @@ function initExampleUser(n) {
       rank: 0,
       wins: lns,
       losses: lnp,
-      matches: lns+lnp,
+      matches: lns + lnp,
     })
   }
 
@@ -54,6 +54,7 @@ function range(start, stop, step) {
 export default function DemoControl() {
   const [createPending, setCreatePending] = useState(false)
   const [deletePending, setDeletePending] = useState(false)
+  const [deleteAllPending, setDeleteAllPending] = useState(false)
   const [rankingPending, setRankingPending] = useState(false)
 
   const createUsers = () => {
@@ -80,13 +81,23 @@ export default function DemoControl() {
       })
   }
 
+  const deleteAllUsers = () => {
+    setDeleteAllPending(true)
+    var deleteAllUsers = functions.httpsCallable('deleteAllUsers');
+    deleteAllUsers().then(function (result) {
+      setDeleteAllPending(false)
+    })
+  }
+
   const rankingUsers = () => {
     setRankingPending(true)
     var orderRanks = functions.httpsCallable('orderRanks');
-    orderRanks().then(function (result) {
-      console.log(result)
-      setRankingPending(false)
-    });
+    orderRanks()
+      .then(function (result) {
+        console.log(result)
+        setRankingPending(false)
+      })
+      .catch(e => message.error(e.message))
   }
 
   return (
@@ -94,6 +105,7 @@ export default function DemoControl() {
       <Space>
         <Button loading={createPending} type='primary' onClick={createUsers} >Create 100 example user</Button>
         <Button loading={deletePending} type='primary' onClick={deleteUsers} danger>Deleta all example user</Button>
+        <Button loading={deleteAllPending} type='primary' onClick={deleteAllUsers} danger>Deleta all user</Button>
         <Button loading={rankingPending} type='primary' onClick={rankingUsers} >Ranking all Users</Button>
       </Space>
     </Card>
