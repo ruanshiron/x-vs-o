@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { auth } from '../firebase'
+import { auth, firestore } from '../firebase'
 import { message, Spin, Row } from 'antd'
 
 export const UserContext = React.createContext(false)
@@ -14,17 +14,26 @@ export default function UserContextProvider({ children }) {
         resolve(user)
       }, reject)
     })
-      .then(user => {
-        setSignedUser(user)
-        return user
+      .then(async user => {
+        if (user !== null && user !== undefined) {
+          const userData = await getUserDocument(user.uid)
+          setSignedUser({ ...user, ...userData })
+        } else {
+          setSignedUser(user)
+        }
       }).catch(error => {
         message.error(error)
       })
   }
 
   const onAuthStateChanged = () => {
-    return auth.onAuthStateChanged(user => {
-      setSignedUser(user)
+    return auth.onAuthStateChanged(async user => {
+      if (user !== null && user !== undefined) {
+        const userData = await getUserDocument(user.uid)
+        setSignedUser({ ...user, ...userData })
+      } else {
+        setSignedUser(user)
+      }
     })
   }
 
@@ -36,9 +45,23 @@ export default function UserContextProvider({ children }) {
     )
   }
 
+  const getUserDocument = (uid) => {
+    const userRef = firestore.collection('users').doc(uid)
+    return new Promise((resolve, reject) => {
+      userRef.get()
+        .then((userDoc) => {
+          if (!userDoc.exists)
+            reject('User is not existed!')
+
+          resolve(userDoc.data())
+        })
+    })
+  }
+
   useEffect(() => {
     getCurrentUser()
     onAuthStateChanged()
+    // eslint-disable-next-line
   }, [])
 
   return (

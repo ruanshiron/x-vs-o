@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Layout, Input, Col, Row, Space, Tooltip } from 'antd'
 import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons'
 import logo from '../logo.svg'
 import LinkButton from './LinkButton'
 import { useRouteMatch } from 'react-router-dom'
 import AuthStateButton from './AuthStateButton'
+import { UserContext } from '../contexts/UserContextProvider'
 
 const headerStyle = {
   position: 'fixed',
@@ -57,7 +58,7 @@ function Logo() {
 }
 
 function Header() {
-  let admin = true
+  const { signedInUser } = useContext(UserContext)
 
   let matchDashboard = useRouteMatch({ path: '/dashboard', exact: false })
   let matchSocial = useRouteMatch({ path: '/social', exact: true })
@@ -92,7 +93,7 @@ function Header() {
               <Space>
                 <AuthStateButton />
                 <RankingButton match={matchSocial} />
-                {admin && <DashboardButton match={matchDashboard} />}
+                {(signedInUser && signedInUser.role > 0) && <DashboardButton match={matchDashboard} />}
               </Space>
             </Row>
           </Col>

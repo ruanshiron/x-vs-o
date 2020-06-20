@@ -24,7 +24,7 @@ export default function useAuth() {
       return firestore.runTransaction(function (transaction) {
         return transaction.get(userRef).then(function (userDoc) {
 
-          if (!userRef.exists) {
+          if (!userDoc.exists) {
             userRef.set({
               ...UserModel, 
               displayName: result.user.displayName, 
@@ -34,10 +34,7 @@ export default function useAuth() {
             return 
           }
           const userData = userDoc.data()
-          if (userData.ranks !== undefined)
-            transaction.update(userRef, { displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL })
-          else
-            transaction.update(userRef, { ...UserModel, displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL })
+          transaction.update(userRef, { ...userData, displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL })
         });
       })
     })
