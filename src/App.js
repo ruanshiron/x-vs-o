@@ -15,6 +15,10 @@ import Dashboard from './pages/dashboard'
 
 import './style.css'
 import UserContextProvider from './contexts/UserContextProvider'
+import PrivateRoute from './components/PrivateRoute'
+import AdminRoute from './components/AdminRoute'
+import LoginRoute from './components/LoginRoute'
+import Search from './pages/search'
 
 const routes = [
   {
@@ -23,10 +27,18 @@ const routes = [
     component: <Home />
   },
   {
-    path: '/dashboard',
+    path: '/social',
     exact: false,
-    component: <Dashboard />
+    component: <Social />
   },
+  {
+    path: '/search',
+    exact: false,
+    component: <Search />
+  }
+]
+
+const loginRoutes = [
   {
     path: '/login',
     exact: false,
@@ -37,16 +49,6 @@ const routes = [
     exact: false,
     component: <SignUp />
   },
-  {
-    path: '/social',
-    exact: false,
-    component: <Social />
-  },
-  {
-    path: '/play',
-    exact: false,
-    component: <Play />
-  }
 ]
 
 function App() {
@@ -58,10 +60,25 @@ function App() {
           {
             routes.map(({ component, ...rest }, i) =>
               <Route {...rest} key={i}>
-                { component }
+                {component}
               </Route>
             )
           }
+          {
+            loginRoutes.map(({ component, ...rest }, i) =>
+              <LoginRoute {...rest} key={i}>
+                {component}
+              </LoginRoute>
+            )
+          }
+          <PrivateRoute path='/play'>
+            <Play />
+          </PrivateRoute>
+
+          <AdminRoute path='/dashboard'>
+            <Dashboard />
+          </AdminRoute>
+
         </Switch>
       </Router>
     </UserContextProvider>

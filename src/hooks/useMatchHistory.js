@@ -6,20 +6,21 @@ export default function useMatchHistory(uid) {
   const [isPending, setIsPending] = useState(true)
 
   useEffect(() => {
-    firestore.collection('matches').where('users', 'array-contains', uid)
+    firestore.collection('historyMatches').where('users', 'array-contains', uid).orderBy('created', 'desc')
       .get()
       .then((querySnapshot) => {
         const newData = []
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          const { winner, users, created } = doc.data()
+          const { winner, users, created, points } = doc.data()
 
+          const userIndex = users.indexOf(uid)
 
           newData.push({
             key: doc.id,
-            win: winner === users.indexOf(uid),
-            point: '?',
-            opponent: { uid: users[1 - users.indexOf(uid)], displayName: null },
+            win: winner === userIndex,
+            point: points ? points[userIndex] : '?',
+            opponent: { uid: users[1 - userIndex], displayName: null },
             created: created.toDate()
           })
         })
@@ -28,14 +29,31 @@ export default function useMatchHistory(uid) {
         setData(newData)
         setIsPending(false)
 
-        newData.forEach((u, i) => {
-          firestore.collection('users').doc(u.opponent.uid).get()
+        let opponents = newData.map(d => d.opponent.uid)
+        opponents = [...new Set(opponents)].filter((v) => v !== undefined)
+
+        Promise.all(opponents.map((u, i) => {
+          return firestore.collection('users').doc(u).get()
             .then((result) => {
-              newData[i].opponent = {uid: u.opponent.uid, displayName: result.data().displayName}
-              
+              return [u, result.data().displayName]
+            })
+        }))
+          .then((r) => {
+            let opponentsData = {}
+            r.forEach(v => {
+              opponentsData[v[0]] = v[1]
+            })
+            return opponentsData
+          })
+          .then(oppData => {
+            newData.forEach((u, i) => {
+              const uid = newData[i].opponent.uid
+              newData[i].opponent.displayName = oppData[uid]
               setData([...newData])
             })
-        })
+          })
+
+
 
       })
   }, [uid])

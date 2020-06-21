@@ -69,15 +69,20 @@ function useBoardState(match) {
           { title: '勝利', message: '最高です！', icon: <SmileTwoTone /> }
           :
           { title: '敗北', message: '次の対戦に頑張りましょう！', icon: <MehTwoTone /> }
-
-        Modal.confirm({
-          title: promt.title,
-          content: promt.message,
-          icon: promt.icon,
-          cancelText: '留まる',
-          okText: '離れる',
-          onOk: () => history.replace('/')
-        })
+        
+        UpdateHistoryToFirebase(doc.data())
+          .then((r) => {
+            console.log(r);
+            
+            Modal.confirm({
+              title: promt.title,
+              content: promt.message,
+              icon: promt.icon,
+              cancelText: '留まる',
+              okText: '離れる',
+              onOk: () => history.replace('/')
+            })
+          })
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,6 +137,21 @@ function useBoardState(match) {
       console.log(r)
     }).catch((err) => {
       console.error(err)
+    })
+  }
+
+  function UpdateHistoryToFirebase(finisedMatch) {
+    const historyMatchRef = firestore.collection('historyMatches').doc(match.id)
+    return firestore.runTransaction((transaction) => {
+      return historyMatchRef.get()
+        .then((doc) => {
+          if (doc.exists) {
+            return 'Match History Documents already existed!'
+          }
+          delete finisedMatch.board
+          delete finisedMatch.ready
+          transaction.set(historyMatchRef, finisedMatch)
+        })
     })
   }
 

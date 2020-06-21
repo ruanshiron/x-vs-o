@@ -6,7 +6,9 @@ export const UserModel = {
   rank: 0,
   wins: 0,
   losses: 0,
-  elo: 0,
+  matches: 0,
+  elo: 1000,
+  role: 0,
   blocked: false
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Typography, Tooltip, Avatar } from 'antd'
 import LinkButton from './LinkButton'
 import { UserContext } from '../contexts/UserContextProvider'

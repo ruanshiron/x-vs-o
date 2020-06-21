@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Card, Button, Space } from 'antd'
-import { firestore } from '../firebase'
+import { Card, Button, Space, message } from 'antd'
+import { firestore, functions } from '../firebase'
+import { UserModel } from '../model'
 
 function initExampleUser(n) {
   let r = []
@@ -13,15 +14,14 @@ function initExampleUser(n) {
 
     const points = lnp - lns > 0 ? lnp - lns : 0
     r.push({
+      ...UserModel,
       email: `user${index}@example.com`,
       displayName: displayName,
-      photoURL: null,
       points: points,
       rank: 0,
       wins: lns,
       losses: lnp,
-      elo: 0,
-      blocked: false
+      matches: lns + lnp,
     })
   }
 
@@ -54,6 +54,8 @@ function range(start, stop, step) {
 export default function DemoControl() {
   const [createPending, setCreatePending] = useState(false)
   const [deletePending, setDeletePending] = useState(false)
+  const [deleteAllPending, setDeleteAllPending] = useState(false)
+  const [rankingPending, setRankingPending] = useState(false)
 
   const createUsers = () => {
     setCreatePending(true)
@@ -79,11 +81,32 @@ export default function DemoControl() {
       })
   }
 
+  const deleteAllUsers = () => {
+    setDeleteAllPending(true)
+    var deleteAllUsers = functions.httpsCallable('deleteAllUsers');
+    deleteAllUsers().then(function (result) {
+      setDeleteAllPending(false)
+    })
+  }
+
+  const rankingUsers = () => {
+    setRankingPending(true)
+    var orderRanks = functions.httpsCallable('orderRanks');
+    orderRanks()
+      .then(function (result) {
+        console.log(result)
+        setRankingPending(false)
+      })
+      .catch(e => message.error(e.message))
+  }
+
   return (
     <Card style={{ width: '100%' }}>
       <Space>
         <Button loading={createPending} type='primary' onClick={createUsers} >Create 100 example user</Button>
         <Button loading={deletePending} type='primary' onClick={deleteUsers} danger>Deleta all example user</Button>
+        <Button loading={deleteAllPending} type='primary' onClick={deleteAllUsers} danger>Deleta all user</Button>
+        <Button loading={rankingPending} type='primary' onClick={rankingUsers} >Ranking all Users</Button>
       </Space>
     </Card>
   )

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { Layout } from 'antd'
-import Footer from '../../components/Footer'
 import Game from '../../components/Game'
 
 import 'react-chat-widget/lib/styles.css'

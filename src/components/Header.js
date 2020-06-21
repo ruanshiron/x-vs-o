@@ -1,10 +1,12 @@
-import React from 'react'
-import { Layout, Input, Col, Row, Space, Tooltip } from 'antd'
+import React, { useContext } from 'react'
+import { Layout, Col, Row, Space, Tooltip } from 'antd'
 import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons'
 import logo from '../logo.svg'
 import LinkButton from './LinkButton'
 import { useRouteMatch } from 'react-router-dom'
 import AuthStateButton from './AuthStateButton'
+import { UserContext } from '../contexts/UserContextProvider'
+import SearchInput from './SearchInput'
 
 const headerStyle = {
   position: 'fixed',
@@ -57,7 +59,7 @@ function Logo() {
 }
 
 function Header() {
-  let admin = true
+  const { signedInUser } = useContext(UserContext)
 
   let matchDashboard = useRouteMatch({ path: '/dashboard', exact: false })
   let matchSocial = useRouteMatch({ path: '/social', exact: true })
@@ -70,7 +72,7 @@ function Header() {
         {
           matchHome &&
           <Col>
-            <LinkButton type='primary' size='large' to='play'>ニューゲーム</LinkButton>
+            <LinkButton type='primary' size='large' to='/play'>ニューゲーム</LinkButton>
           </Col>
         }
 
@@ -81,7 +83,7 @@ function Header() {
         {
           !(matchHome || matchPlay) &&
           <Col>
-            <Input placeholder='ユーザーを検索'></Input>
+            <SearchInput />
           </Col>
         }
 
@@ -92,7 +94,7 @@ function Header() {
               <Space>
                 <AuthStateButton />
                 <RankingButton match={matchSocial} />
-                {admin && <DashboardButton match={matchDashboard} />}
+                {(signedInUser && signedInUser.role > 0) && <DashboardButton match={matchDashboard} />}
               </Space>
             </Row>
           </Col>
