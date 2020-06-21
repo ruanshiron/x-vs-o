@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, List, Avatar, Tag, Pagination } from 'antd'
+import { Layout, List, Avatar, Pagination } from 'antd'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import useSearch from '../../hooks/useSearch'
