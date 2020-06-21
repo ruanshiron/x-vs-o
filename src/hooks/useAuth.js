@@ -30,12 +30,15 @@ export default function useAuth() {
         return transaction.get(userRef).then(function (userDoc) {
 
           if (!userDoc.exists) {
-            userRef.set({
+            const userData = {
               ...UserModel, 
               displayName: result.user.displayName, 
               email: result.user.email,
               photoURL: result.user.photoURL
-            })
+            }
+            
+            userRef.set(userData)
+            indexSearch.saveObject(userData)
             return 
           }
 

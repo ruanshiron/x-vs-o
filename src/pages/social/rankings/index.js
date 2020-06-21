@@ -28,18 +28,18 @@ const columns = [
   //   render: (point, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{point}</Typography.Title>
   // },
   {
-    title: '勝ち',
+    title: '勝率',
     dataIndex: 'wins',
     key: 'wins',
     align: 'right',
-    render: (wins, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{wins}</Typography.Title>
+    render: (wins, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{isNaN(wins / record.matches * 100) ? '_' : Math.floor(wins / record.matches * 100)}%</Typography.Title>
   },
   {
-    title: '対戦',
-    dataIndex: 'matches',
-    key: 'matches',
+    title: 'ELO/ポイント',
+    dataIndex: 'elo',
+    key: 'elo',
     align: 'right',
-    render: (matches, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{matches}</Typography.Title>
+    render: (elo, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{elo}</Typography.Title>
   }
 ];
 
@@ -54,13 +54,13 @@ function Rankings(props) {
           columns={columns}
           dataSource={topRank}
           showHeader={true}
-          pagination={false} 
+          pagination={false}
           onRow={(record, rowIndex) => {
             return {
               onClick: event => { }
             }
           }}
-          scroll={{x: true}}
+          scroll={{ x: true }}
         />
       </Card>
     </div>

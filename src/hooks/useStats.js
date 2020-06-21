@@ -29,9 +29,9 @@ export default function useStats(uid) {
         const { rank, wins, matches, elo } = doc.data()
         setData([
           {
-            title: 'ELO',
-            value: elo,
-            key: 'elo'
+            title: 'クラス',
+            value: rankClass(rank),
+            key: 'class'
           },
           {
             title: 'ランク',
@@ -39,9 +39,9 @@ export default function useStats(uid) {
             key: 'rank'
           },
           {
-            title: 'クラス',
-            value: rankClass(rank),
-            key: 'class'
+            title: 'ELO',
+            value: elo,
+            key: 'elo'
           },
           {
             title: '勝ち',
@@ -55,7 +55,7 @@ export default function useStats(uid) {
           },
           {
             title: '勝率',
-            value: Math.floor(wins / (matches) * 100) + '%'
+            value: isNaN((Math.floor(wins / (matches) * 100))) ? '_' : (Math.floor(wins / (matches) * 100)) + '%'
           },
         ])
       })
