@@ -33,7 +33,7 @@ const K_init = (elo) => {
   if (elo < 2400) return 15
 
   // + K = 10 dành cho kỳ thủ có cường số trên 2400
-  if (elo >= 2400) return 10
+  return 10
 }
 
 exports.onUserCreated = functions.firestore
@@ -98,7 +98,7 @@ exports.orderRanks = functions.https.onCall((data, context) => {
       .then((users) => {
         let index = 1
         console.log('🏆Ranking')
-        users.forEach(function (userDoc) {
+        users.forEach((userDoc) => {
           transaction.update(userDoc.ref, { rank: index })
           console.log(`${userDoc.id}\t\t${index}`)
           // increasing index
@@ -109,11 +109,17 @@ exports.orderRanks = functions.https.onCall((data, context) => {
   })
 })
 
-exports.deleteAllUsers = functions.https.onCall(async (data, context) => {
-  const usersList = await auth.listUsers()
-  const usersUID = []
-  usersList.users.forEach(u => usersUID.push(u.uid))
-  console.log(usersUID);
+exports.deleteAllUsers = functions.https.onCall((data, context) => {
+  auth.listUsers()
+    .then((listUsersResult) => {
+      listUsersResult.users.forEach((userRecord) => {
+        console.log('user', userRecord.toJSON());
+      })
+      return true
+    })
+    .catch((error) => {
+      console.log('Error listing users:', error);
+    });
 
 
   // admin.auth().deleteUsers(usersUID)

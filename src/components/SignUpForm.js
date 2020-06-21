@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import { UserModel } from '../model'
 import { UserContext } from '../contexts/UserContextProvider'
+import indexSearch from '../algoliasearch'
 
 const formItemLayout = {
   labelAlign: 'left',
@@ -60,6 +61,12 @@ function SignupForm(props) {
             ...u
           }))
           history.replace('/')
+
+          indexSearch.saveObject({
+            objectID: result.user.uid,
+            displayName: name,
+            email: result.user.email
+          })
         })
         .catch(function (error) {
           console.error("Error writing document: ", error);

@@ -1,7 +1,12 @@
 import { provider, auth, firestore } from '../firebase'
 import { UserModel } from '../model'
+import { useContext } from 'react'
+import { UserContext } from '../contexts/UserContextProvider'
+import indexSearch from '../algoliasearch'
 
 export default function useAuth() {
+
+  const { setSignedUser } = useContext(UserContext)
 
   const login = (email, password) => {
     return auth.signInWithEmailAndPassword(email, password)
@@ -33,8 +38,14 @@ export default function useAuth() {
             })
             return 
           }
-          const userData = userDoc.data()
-          transaction.update(userRef, { ...userData, displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL })
+
+          
+          const userData = { ...userDoc.data(), displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL }
+          setSignedUser(u => ({...u, ...userData}))
+          transaction.update(userRef, { ...userData})
+
+          userData.objectID = result.user.uid
+          indexSearch.saveObject(userData)
         });
       })
     })

@@ -23,13 +23,13 @@ const firestore = firebaseApp.firestore()
 const storage = firebaseApp.storage()
 const functions = firebase.functions()
 
-if (window.location.hostname === "localhost") {
-  firestore.settings({
-    host: "localhost:8000",
-    ssl: false
-  })
+// if (window.location.hostname === "localhost") {
+//   firestore.settings({
+//     host: "localhost:8000",
+//     ssl: false
+//   })
 
-  functions.useFunctionsEmulator('http://localhost:5001')
-}
+//   functions.useFunctionsEmulator('http://localhost:5001')
+// }
 
 export { firestore, provider, auth, storage, functions }
