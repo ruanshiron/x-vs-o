@@ -54,7 +54,7 @@ function useBoardState(match) {
   const [repeat, setRepeat] = useState()
   useEffect(() => {
 
-    matchRef.onSnapshot((doc) => {
+    const unsubscribe = matchRef.onSnapshot((doc) => {
       const { board, turn, winner } = doc.data()
 
       if (board) setBoard(JSON.parse(board))
@@ -82,6 +82,8 @@ function useBoardState(match) {
               okText: '離れる',
               onOk: () => history.replace('/')
             })
+
+            unsubscribe()
           })
       }
     })

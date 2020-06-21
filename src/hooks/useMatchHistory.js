@@ -31,11 +31,14 @@ export default function useMatchHistory(uid) {
 
         let opponents = newData.map(d => d.opponent.uid)
         opponents = [...new Set(opponents)].filter((v) => v !== undefined)
+        
 
         Promise.all(opponents.map((u, i) => {
           return firestore.collection('users').doc(u).get()
             .then((result) => {
-              return [u, result.data().displayName]
+              console.log(result.data())
+              
+              return [u, result.data()?.displayName]
             })
         }))
           .then((r) => {

@@ -25,7 +25,7 @@ export default function Search() {
                   title={<Link to={`/social/${item.objectID}`}>{item.displayName}</Link>}
                   description={item.email}
                 />
-                <Tag>Top: {item.rank}</Tag>
+                {/* <Tag>Top: {item.rank}</Tag> */}
               </List.Item>
             )}
           />
