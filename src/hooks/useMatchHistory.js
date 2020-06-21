@@ -36,7 +36,9 @@ export default function useMatchHistory(uid) {
         Promise.all(opponents.map((u, i) => {
           return firestore.collection('users').doc(u).get()
             .then((result) => {
-              console.log(result.data())
+              if (!result.exists) {
+                return [u, '?']
+              }
               
               return [u, result.data()?.displayName]
             })
