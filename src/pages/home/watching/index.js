@@ -5,7 +5,7 @@ import { Card, Input, Divider } from 'antd'
 function Watching() {
   return (
     <div className="site-layout-background" >
-      <Card style={{ maxWidth: 512, margin: 'auto' }} >
+      <div className='game-wrapper' >
         <Input.Search
           placeholder="進行中の対戦のコードを入力"
           onSearch={value => console.log(value)}
@@ -13,7 +13,7 @@ function Watching() {
           enterButton
         />
         <Divider dashed/>
-      </Card>
+      </div>
     </div>
   )
 }

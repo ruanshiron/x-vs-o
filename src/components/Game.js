@@ -17,7 +17,7 @@ function Game() {
   }, [match])
 
   return (
-    <Card style={styleGameBoard} >
+    <div className='game-wrapper'>
       {
         match ?
           <>
@@ -26,7 +26,7 @@ function Game() {
           :
           <Spin style={{ margin: 'auto' }} indicator={antIcon} />
       }
-    </Card>
+    </div>
   )
 }
 
