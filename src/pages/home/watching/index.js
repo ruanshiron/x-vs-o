@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Input, Divider } from 'antd'
+import { Input, Divider } from 'antd'
 
 
 function Watching() {
