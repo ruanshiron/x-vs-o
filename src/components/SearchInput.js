@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { AutoComplete, Input } from 'antd'
 import { firestore } from '../firebase'
 import { useHistory } from 'react-router-dom'
-import indexSearch from '../algoliasearch'
 
 const searchResult = async query => {
   const userRef = firestore.collection('users').where('displayName', '>=', query).limit(10)

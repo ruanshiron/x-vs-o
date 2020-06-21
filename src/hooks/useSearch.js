@@ -35,7 +35,7 @@ export default function useSearch() {
         setNbHits(res.nbHits)
         setResult(res.hits)
       })
-    
+    // eslint-disable-next-line
   }, [location])
 
   return {
