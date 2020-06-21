@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { AutoComplete, Input } from 'antd'
-import { firestore } from '../firebase';
-import { useHistory } from 'react-router-dom';
+import { firestore } from '../firebase'
+import { useHistory } from 'react-router-dom'
+import indexSearch from '../algoliasearch'
 
 const searchResult = async query => {
   const userRef = firestore.collection('users').where('displayName', '>=', query).limit(10)
@@ -48,7 +49,11 @@ export default function SearchInput() {
   const onSelect = (value, data) => {
     console.log('onSelect', value)
     history.push(`/social/${data.uid}`)
-  };
+  }
+
+  const onSearch = (query) => {
+    history.push(`/search/?q=${query}`)
+  }
 
   return (
     <AutoComplete
@@ -57,7 +62,7 @@ export default function SearchInput() {
       onSelect={onSelect}
       onSearch={handleSearch}
     >
-      <Input.Search placeholder='ユーザを検索' onSearch={() => console.log('search')} />
+      <Input.Search style={{maxWidth: 180}} size='large' placeholder='ユーザを検索' onSearch={onSearch} />
     </AutoComplete>
   )
 }

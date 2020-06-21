@@ -18,6 +18,7 @@ import UserContextProvider from './contexts/UserContextProvider'
 import PrivateRoute from './components/PrivateRoute'
 import AdminRoute from './components/AdminRoute'
 import LoginRoute from './components/LoginRoute'
+import Search from './pages/search'
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: '/social',
     exact: false,
     component: <Social />
+  },
+  {
+    path: '/search',
+    exact: false,
+    component: <Search />
   }
 ]
 

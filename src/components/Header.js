@@ -72,7 +72,7 @@ function Header() {
         {
           matchHome &&
           <Col>
-            <LinkButton type='primary' size='large' to='play'>ニューゲーム</LinkButton>
+            <LinkButton type='primary' size='large' to='/play'>ニューゲーム</LinkButton>
           </Col>
         }
 
