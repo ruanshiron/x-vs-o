@@ -70,7 +70,7 @@ function Header() {
         {
           matchHome ?
             <>
-              <Col xs={12} sm={4}>
+              <Col xs={4}>
                 <LinkButton type='primary' size='large' to='/play'>ニューゲーム</LinkButton>
               </Col>
               <Logo />
