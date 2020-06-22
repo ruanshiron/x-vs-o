@@ -55,12 +55,34 @@
   font-feature-settings: 'tnum', "tnum";
 }
 
+.main-wrapper {
+  padding: 24px;
+  color: rgba(0, 0, 0, 0.65);
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #f0f0f0;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum', "tnum";
+}
+
 @media only screen and (max-width: 600px) {
   .game-wrapper {
     padding: 0px;
     border: none;
   }
+
+  .main-wrapper {
+    padding: 0px;
+    border: none;
+  }
 }
+
+
 
 /* Board */
 .board-container {

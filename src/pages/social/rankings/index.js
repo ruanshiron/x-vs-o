@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Typography, Table } from 'antd'
+import { Typography, Table } from 'antd'
 import useRankings from '../../../hooks/useRankings'
 import { Link } from 'react-router-dom'
 
@@ -48,7 +48,7 @@ function Rankings(props) {
 
   return (
     <div className="site-layout-background" >
-      <Card style={{ width: '100%', marginTop: 16 }} >
+      <div className='main-wrapper'>
         <Table
           loading={isPending}
           columns={columns}
@@ -62,7 +62,7 @@ function Rankings(props) {
           }}
           scroll={{ x: true }}
         />
-      </Card>
+      </div>
     </div>
   )
 }

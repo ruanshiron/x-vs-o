@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Card, Tag, Table, Button } from 'antd'
+import { Layout, Tag, Table, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
@@ -85,7 +85,8 @@ function Dashboard() {
       <Layout.Content style={contentStyle}>
         <div className="site-layout-background" >
           <DemoControl />
-          <Card style={{ width: '100%', marginTop: 16 }} >
+          <br/>
+          <div className="main-wrapper">
             <Table
               loading={isPending}
               columns={columns}
@@ -94,7 +95,7 @@ function Dashboard() {
               rowKey={(record) => record.email}
               scroll={{ x: true }}
             />
-          </Card>
+          </div>
         </div>
       </Layout.Content>
       <Footer />
