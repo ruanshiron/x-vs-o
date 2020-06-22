@@ -1,5 +1,6 @@
 import React from 'react'
 import { Layout, Typography, Divider } from 'antd'
+import { Link } from 'react-router-dom'
 
 
 function Footer(props) {
@@ -7,7 +8,7 @@ function Footer(props) {
   <Layout.Footer style={{ textAlign: 'center', backgroundColor: '#fff'}}>
     {props.children}
     <Divider />
-    <Typography.Text strong>ナナ</Typography.Text>
+    <Link to='/'><Typography.Text strong>ナナ</Typography.Text></Link>
   </Layout.Footer>
   )
 }

@@ -48,12 +48,10 @@ function RankingButton({ match }) {
 
 function Logo() {
   return (
-    <Row justify='center'>
-      <a id='logo' href='/'>
-        <img alt='logo' src={logo} />
+    <a id='logo' href='/'>
+      <img alt='logo' src={logo} />
         X vs O
-      </a>
-    </Row>
+    </a>
 
   )
 }
@@ -70,26 +68,31 @@ function Header() {
     <Layout.Header style={headerStyle}>
       <Row justify="space-between">
         {
-          matchHome &&
-          <Col>
-            <LinkButton type='primary' size='large' to='/play'>ニューゲーム</LinkButton>
-          </Col>
+          matchHome ?
+            <>
+              <Col xs={12} sm={4}>
+                <LinkButton type='primary' size='large' to='/play'>ニューゲーム</LinkButton>
+              </Col>
+              <Logo />
+            </>
+            :
+            <Logo />
         }
-
-        <Col>
-          <Logo />
-        </Col>
 
         {
           !(matchHome || matchPlay) &&
-          <Col>
-            <SearchInput />
+          <Col flex='1'>
+            <Row justify='center'>
+              <Col>
+                <SearchInput />
+              </Col>
+            </Row>
           </Col>
         }
 
         {
           !matchPlay &&
-          <Col>
+          <Col flex='160px'>
             <Row justify="end">
               <Space>
                 <AuthStateButton />

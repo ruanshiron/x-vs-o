@@ -16,6 +16,12 @@
   margin-right: 16px;
 }
 
+@media only screen and (max-width: 575.99px) {
+  #logo {
+    display: none;
+  }
+}
+
 #profile-avatar {
   position: relative;
   height: 138px;

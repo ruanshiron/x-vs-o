@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Button, Space, message } from 'antd'
+import { Card, Button, message } from 'antd'
 import { firestore, functions } from '../firebase'
 import { UserModel } from '../model'
 
@@ -102,12 +102,10 @@ export default function DemoControl() {
 
   return (
     <Card style={{ width: '100%' }}>
-      <Space>
-        <Button loading={createPending} type='primary' onClick={createUsers} >Create 100 example user</Button>
-        <Button loading={deletePending} type='primary' onClick={deleteUsers} danger>Deleta all example user</Button>
-        <Button loading={deleteAllPending} type='primary' onClick={deleteAllUsers} danger>Deleta all user</Button>
-        <Button loading={rankingPending} type='primary' onClick={rankingUsers} >Ranking all Users</Button>
-      </Space>
+      <Button loading={createPending} type='primary' onClick={createUsers} >Create 100 example user</Button>
+      <Button loading={deletePending} type='primary' onClick={deleteUsers} danger>Deleta all example user</Button>
+      <Button loading={deleteAllPending} type='primary' onClick={deleteAllUsers} danger>Deleta all user</Button>
+      <Button loading={rankingPending} type='primary' onClick={rankingUsers} >Ranking all Users</Button>
     </Card>
   )
 }
