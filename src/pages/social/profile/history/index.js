@@ -58,6 +58,7 @@ function History({ defaultPage }) {
       }}
       dataSource={data}
       showHeader={false}
+      scroll={{ x: true }}
     />
   )
 
